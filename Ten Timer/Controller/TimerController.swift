@@ -58,12 +58,26 @@ class TimerController: UIViewController {
     
     //MARK: - Helpers
     
+    func getNotificationSound() -> UNNotificationSound? {
+        let timerSoundInt = Int(timer.soundInt)
+        
+        switch timerSoundInt {
+        case 0:
+            return nil
+        case 1:
+            return UNNotificationSound.default
+        default:
+            let soundName = soundArray[timerSoundInt].id
+            return UNNotificationSound(named: UNNotificationSoundName(rawValue: "\(soundName).m4a"))
+        }
+    }
+    
     func setNotification(remindSecond: CGFloat){
         handleStop(.user)
         if remindSecond > 0 {
             let content = UNMutableNotificationContent()
             content.title = "Completed"
-            content.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: "red-arrow.mp3"))
+            content.sound = getNotificationSound()
             
             let trigger = UNTimeIntervalNotificationTrigger(timeInterval: remindSecond, repeats: false)
             let id = UUID().uuidString
@@ -108,8 +122,12 @@ class TimerController: UIViewController {
     private func handleStop(_ stopOption: StopOptions? = .auto) {
         timeR.invalidate()
         if stopOption == .auto {
-            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-            AudioServicesPlayAlertSound(SystemSoundID(1322))
+            if UDM.getBoolValue(UDM.isVibrate) {
+                AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+            }
+            
+            let sound = soundArray[Int(timer.soundInt)]
+            Player.shared.play(sound: sound)
         }
         navigationController?.popViewController(animated: false)
     }
@@ -140,14 +158,11 @@ class TimerController: UIViewController {
     }
     
     private func configureNavigationBar() {
-        title = "\(timer.timerNumber)"
-        
-        navigationItem.titleView?.tintColor = .yellow
+        title = "\(timer.timerNumber+1)"
+        navigationItem.leftBarButtonItem = UIBarButtonItem()
         
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
-        
-        navigationItem.leftBarButtonItem = UIBarButtonItem()
     }
 }

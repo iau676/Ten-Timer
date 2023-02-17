@@ -34,14 +34,11 @@ class HomeController: UIViewController {
         configureNavigationBar()
         style()
         layout()
+        configureSound()
         
         //it will run when user reopen the app after pressing home button
         NotificationCenter.default.addObserver(self, selector: #selector(self.checkTimer),
                                                name: UIApplication.didBecomeActiveNotification, object: nil)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
     }
     
     //MARK: - Selectors
@@ -71,6 +68,7 @@ class HomeController: UIViewController {
         if UDM.getStringValue(UDM.currentVersion) == nil {
             UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .sound, .alert]) { _, _ in }
             UDM.setValue("1.0", UDM.currentVersion)
+            UDM.setValue(true, UDM.isVibrate)
             for i in 0...9 {
                 TT.shared.appendItem(i)
             }
@@ -94,6 +92,35 @@ class HomeController: UIViewController {
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
+    }
+    
+    private func configureSound() {
+        readJsonFile(name: "Sound") { dictionaries in
+            let sounds = dictionaries.compactMap(Sound.init)
+            
+            for i in 0..<sounds.count {
+                soundArray.append(sounds[i])
+            }
+                              
+            let sortedArray = soundArray.sorted { s1, s2 in
+                return s1.seconds < s2.seconds
+            }
+        
+            soundArray = sortedArray
+        }
+    }
+    
+    func readJsonFile(name: String, completion: @escaping([[String: Any]])-> Void) {
+        if let path = Bundle.main.path(forResource: "Sound", ofType: "json") {
+            do {
+                let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+                if let dictionaries = try! JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.fragmentsAllowed) as? [[String: Any]] {
+                    completion(dictionaries)
+                }
+            } catch {
+                print("DEBUG: try Data error")
+            }
+        }
     }
 }
 
@@ -131,7 +158,16 @@ extension HomeController: UICollectionViewDelegateFlowLayout {
 extension HomeController: TimerCellDelegate {
     func settingsPressed(_ timer: TenTimer) {
         let controller = SettingsController(timer: timer)
+        controller.delegate = self
         controller.modalPresentationStyle = .overFullScreen
         navigationController?.pushViewController(controller, animated: true)
+    }
+}
+
+//MARK: - SettingsControllerDelegate
+
+extension HomeController: SettingsControllerDelegate {
+    func reloadData() {
+        self.timerCV.reloadData()
     }
 }

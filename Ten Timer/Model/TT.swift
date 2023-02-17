@@ -32,6 +32,21 @@ struct TT {
         saveItems()
     }
     
+    func updateTimerSound(timer: TenTimer, newSoundInt: Int) {
+        timer.soundInt = Int16(newSoundInt)
+        saveItems()
+    }
+    
+    func updateTimerTotalSeconds(timer: TenTimer, newTotalSeconds: Int) {
+        timer.totalSeconds = Int32(newTotalSeconds)
+        saveItems()
+    }
+    
+    func updateTimerTitle(timer: TenTimer, newTitle: String) {
+        timer.title = newTitle
+        saveItems()
+    }
+    
     mutating func loadTimers(with request: NSFetchRequest<TenTimer> = TenTimer.fetchRequest()){
         do {
             request.sortDescriptors = [NSSortDescriptor(key: "timerNumber", ascending: true)]
@@ -69,5 +84,25 @@ struct TT {
             let lastTimeCounter = UDM.getIntValue(UDM.lastTimerCounter)
             UDM.setValue(totalSeconds-(totalSeconds-(secondsCount+lastTimeCounter)), UDM.currentTimerCounter)
         }
+    }
+    
+    func getTimeString(_ second: Int) -> String {
+        let hour = second / 3600
+        let min = (second - (hour*3600)) / 60
+        let sec = second - ((hour*3600)+(min*60))
+        
+        let hourStr = "\(hour)' "
+        let minStr = "\(min)\" "
+        let secStr = "\(sec)"
+        
+        return "\(hour > 0 ? hourStr : "")\(min > 0 ? minStr : "")\(sec > 0 ? secStr : "")"
+    }
+    
+    func getTimeInt(_ second: Int) -> (Int, Int, Int) {
+        let hour = second / 3600
+        let min = (second - (hour*3600)) / 60
+        let sec = second - ((hour*3600)+(min*60))
+        
+        return (hour, min, sec)
     }
 }

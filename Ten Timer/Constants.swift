@@ -15,18 +15,9 @@ let colorArray: [UIColor] = [.systemRed, .systemOrange,
                             .systemIndigo, .systemPurple,
                             .systemPink, .systemGray]
 
-let soundArray: [Int16] = [1327,
-                         1328,
-                         1329,
-                         1330,
-                         1331,
-                         1332,
-                         1333,
-                         1334,
-                         1335,
-                         1336]
+var soundArray = [Sound]()
 
-let defaultSeconds: [Int32] = [3,5,10,20,25,30,40,45,50,60]
+let defaultSeconds: [Int32] = [3,5,10,20,25,30,40,45,6550,130]
 
 enum Colors {
     static let f6f6f6                    = UIColor(hex: "#f6f6f6")

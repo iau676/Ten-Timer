@@ -6,6 +6,7 @@
         <attribute name="countdownSpeechType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="countdownType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="isBasic" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isCountdownSpeech" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="isVibrate" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="soundInt" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -16,6 +17,6 @@
         <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
     </entity>
     <elements>
-        <element name="TenTimer" positionX="-63" positionY="-18" width="128" height="224"/>
+        <element name="TenTimer" positionX="-63" positionY="-18" width="128" height="239"/>
     </elements>
 </model>
