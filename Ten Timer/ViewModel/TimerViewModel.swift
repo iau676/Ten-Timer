@@ -16,7 +16,8 @@ struct TimerViewModel {
     }
     
     var colorName: UIColor {
-        return colorArray[Int(timer.colorInt)]
+        let hex = colorArray[Int(timer.colorInt)].hex
+        return UIColor(hex: "#\(hex)") ?? .darkGray
     }
     
     var seconds: Int32 {

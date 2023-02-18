@@ -70,6 +70,13 @@ class SettingsController: UIViewController {
         present(controller, animated: true)
     }
     
+    @objc private func colorButtonPressed() {
+        let controller = ColorController(timer: timer)
+        controller.delegate = self
+        controller.modalPresentationStyle = .formSheet
+        present(controller, animated: true)
+    }
+    
     //MARK: - Helpers
     
     private func style(){
@@ -87,8 +94,11 @@ class SettingsController: UIViewController {
         titleTextField.textAlignment = .center
         titleTextField.delegate = self
         titleTextField.setLeftPaddingPoints(8)
+  
+        let hex = colorArray[Int(timer.colorInt)].hex
+        colorButton.backgroundColor = UIColor(hex: "#\(hex)")
+        colorButton.addTarget(self, action: #selector(colorButtonPressed), for: .touchUpInside)
         
-        colorButton.backgroundColor = colorArray[Int(timer.colorInt)]
         soundButton.addTarget(self, action: #selector(soundButtonPressed), for: .touchUpInside)
         soundButton.contentHorizontalAlignment = .right
         soundButton.setTitleColor(.darkGray, for: .normal)
@@ -250,5 +260,15 @@ extension SettingsController: SoundsControllerDelegate {
     func updateSound(newSoundInt: Int) {
         TT.shared.updateTimerSound(timer: timer, newSoundInt: newSoundInt)
         soundButton.setTitle("\(soundArray[newSoundInt].name)", for: .normal)
+    }
+}
+
+//MARK: - ColorControllerDelegate
+
+extension SettingsController: ColorControllerDelegate {
+    func updateColor(newColorInt: Int) {
+        TT.shared.updateTimerColor(timer: timer, newColorInt: newColorInt)
+        let hex = colorArray[newColorInt].hex
+        colorButton.backgroundColor = UIColor(hex: "#\(hex)")
     }
 }

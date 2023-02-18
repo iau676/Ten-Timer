@@ -9,12 +9,7 @@ import UIKit
 
 let UDM = UserDefaultsManager.shared
 
-let colorArray: [UIColor] = [.systemRed, .systemOrange,
-                            .systemYellow, .systemGreen,
-                            .systemTeal, .systemBlue,
-                            .systemIndigo, .systemPurple,
-                            .systemPink, .systemGray]
-
+var colorArray = [Color]()
 var soundArray = [Sound]()
 
 let defaultSeconds: [Int32] = [3,5,10,20,25,30,40,45,6550,130]

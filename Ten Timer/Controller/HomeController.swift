@@ -32,13 +32,19 @@ class HomeController: UIViewController {
         super.viewDidLoad()
         setDefaultTimers()
         configureNavigationBar()
+        configureColor()
+        configureSound()
         style()
         layout()
-        configureSound()
         
         //it will run when user reopen the app after pressing home button
         NotificationCenter.default.addObserver(self, selector: #selector(self.checkTimer),
                                                name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        timerCV.reloadData()
     }
     
     //MARK: - Selectors
@@ -59,7 +65,6 @@ class HomeController: UIViewController {
             let timer = TT.shared.timerArray[UDM.getIntValue(UDM.selectedTimerIndex)]
             let controller = TimerController(timer: timer)
             controller.modalPresentationStyle = .overFullScreen
-            //self.present(controller, animated: false)
             self.navigationController?.pushViewController(controller, animated: false)
         }
     }
@@ -94,8 +99,18 @@ class HomeController: UIViewController {
         navigationController?.navigationBar.isTranslucent = true
     }
     
+    private func configureColor() {
+        readJsonFile(fileName: "Color") { dictionaries in
+            let colors = dictionaries.compactMap(Color.init)
+            
+            for i in 0..<colors.count {
+                colorArray.append(colors[i])
+            }
+        }
+    }
+    
     private func configureSound() {
-        readJsonFile(name: "Sound") { dictionaries in
+        readJsonFile(fileName: "Sound") { dictionaries in
             let sounds = dictionaries.compactMap(Sound.init)
             
             for i in 0..<sounds.count {
@@ -110,8 +125,8 @@ class HomeController: UIViewController {
         }
     }
     
-    func readJsonFile(name: String, completion: @escaping([[String: Any]])-> Void) {
-        if let path = Bundle.main.path(forResource: "Sound", ofType: "json") {
+    func readJsonFile(fileName: String, completion: @escaping([[String: Any]])-> Void) {
+        if let path = Bundle.main.path(forResource: fileName, ofType: "json") {
             do {
                 let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
                 if let dictionaries = try! JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.fragmentsAllowed) as? [[String: Any]] {

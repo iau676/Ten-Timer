@@ -47,6 +47,11 @@ struct TT {
         saveItems()
     }
     
+    func updateTimerColor(timer: TenTimer, newColorInt: Int) {
+        timer.colorInt = Int16(newColorInt)
+        saveItems()
+    }
+    
     mutating func loadTimers(with request: NSFetchRequest<TenTimer> = TenTimer.fetchRequest()){
         do {
             request.sortDescriptors = [NSSortDescriptor(key: "timerNumber", ascending: true)]

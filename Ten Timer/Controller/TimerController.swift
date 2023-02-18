@@ -115,7 +115,8 @@ class TimerController: UIViewController {
     
     private func handleStart() {
         totalSecond = CGFloat(timer.totalSeconds)
-        timerView.backgroundColor = colorArray[Int(timer.colorInt)]
+        let hex = colorArray[Int(timer.colorInt)].hex
+        timerView.backgroundColor = UIColor(hex: "#\(hex)")
         timerCounter += 1
     }
     

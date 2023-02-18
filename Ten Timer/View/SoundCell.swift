@@ -45,9 +45,10 @@ class SoundCell: UITableViewCell {
     //MARK: - Helpers
     
     func configure() {
-        secondsLabel.text = "0:\(sound?.seconds ?? 0) ・"
-        nameLabel.text = sound?.name
-        checkLabel.text = "\(sound?.selected ?? false ? "✓" : "")"
+        guard let sound = sound else { return }
+        
+        nameLabel.text = sound.name
+        secondsLabel.text = "0:\(sound.seconds) ・"
+        checkLabel.text = "\(sound.selected ? "✓" : "")"
     }
-    
 }

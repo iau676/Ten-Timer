@@ -21,11 +21,12 @@ class SoundsController: UIViewController {
     private let timer: TenTimer
     weak var delegate: SoundsControllerDelegate?
     
+    private let lineView = UIView()
+    
     private let vibrateLabel = makePaddingLabel(withText: "Vibrate")
     private let vibrateSwitch = makeSwitch(isOn: true)
     
     private let tableView = UITableView()
-    private let lineView = UIView()
     
     //MARK: - Lifecycle
     
@@ -42,10 +43,7 @@ class SoundsController: UIViewController {
         super.viewDidLoad()
         style()
         layout()
-        
-        resetCheckmark()
-        soundArray[Int(timer.soundInt)].selected = true
-        tableView.reloadData()
+        configureSelectedSound()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -63,6 +61,12 @@ class SoundsController: UIViewController {
     }
     
     //MARK: - Helpers
+    
+    private func configureSelectedSound() {
+        resetCheckmark()
+        soundArray[Int(timer.soundInt)].selected = true
+        tableView.reloadData()
+    }
     
     private func resetCheckmark() {
         for i in 0..<soundArray.count {

@@ -22,6 +22,7 @@ struct Player {
         } catch {
          print(error)
         }
+        //player.numberOfLoops = -1
         player.play()
     }
     
