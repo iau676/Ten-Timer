@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21G419" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
-    <entity name="TenTimer" representedClassName="TenTimer" syncable="YES" codeGenerationType="class">
+    <entity name="InnerTimer" representedClassName="InnerTimer" syncable="YES">
+        <attribute name="colorInt" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="seconds" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="soundInt" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="tTimer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TTimer" inverseName="innerTimers" inverseEntity="TTimer"/>
+    </entity>
+    <entity name="TTimer" representedClassName="TTimer" syncable="YES">
         <attribute name="alertType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="colorInt" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="countdownSpeechType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
@@ -15,8 +24,10 @@
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="totalSeconds" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="innerTimers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InnerTimer" inverseName="tTimer" inverseEntity="InnerTimer"/>
     </entity>
     <elements>
-        <element name="TenTimer" positionX="-63" positionY="-18" width="128" height="239"/>
+        <element name="InnerTimer" positionX="-63" positionY="90" width="128" height="134"/>
+        <element name="TTimer" positionX="-63" positionY="-18" width="128" height="254"/>
     </elements>
 </model>

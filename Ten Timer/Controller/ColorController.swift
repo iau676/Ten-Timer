@@ -17,7 +17,7 @@ class ColorController: UIViewController {
     
     //MARK: - Properties
     
-    private let timer: TenTimer
+    private let timer: TTimer
     weak var delegate: ColorControllerDelegate?
     
     private let lineView = UIView()
@@ -37,7 +37,7 @@ class ColorController: UIViewController {
     
     //MARK: - Lifecycle
     
-    init(timer: TenTimer) {
+    init(timer: TTimer) {
         self.timer = timer
         super.init(nibName: nil, bundle: nil)
     }

@@ -9,7 +9,7 @@ import UIKit
 
 struct TimerViewModel {
     
-    var timer: TenTimer
+    var timer: TTimer
     
     var totalSecondsStr: String {
         return "\(TT.shared.getTimeString(Int(timer.totalSeconds)))"
@@ -28,7 +28,7 @@ struct TimerViewModel {
         return timer.title ?? ""
     }
     
-    init(timer: TenTimer) {
+    init(timer: TTimer) {
         self.timer = timer
     }
     

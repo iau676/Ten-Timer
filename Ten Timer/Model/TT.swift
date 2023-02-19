@@ -11,11 +11,11 @@ import CoreData
 struct TT {
     
     static var shared = TT()
-    var timerArray = [TenTimer]()
+    var timerArray = [TTimer]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     mutating func appendItem(_ number: Int) {
-        let newTimer = TenTimer(context: self.context)
+        let newTimer = TTimer(context: self.context)
         newTimer.date = Date()
         newTimer.uuid = UUID()
         newTimer.totalSeconds = defaultSeconds[number]
@@ -32,27 +32,44 @@ struct TT {
         saveItems()
     }
     
-    func updateTimerSound(timer: TenTimer, newSoundInt: Int) {
+    mutating func appendInnerTimer(to timer: TTimer, title: String, seconds: Int, colorInt: Int, soundInt: Int) {
+        let newInnerTimer = InnerTimer(context: self.context)
+        newInnerTimer.date = Date()
+        newInnerTimer.uuid = UUID()
+        newInnerTimer.title = title
+        newInnerTimer.seconds = Int64(seconds)
+        newInnerTimer.colorInt = Int64(colorInt)
+        newInnerTimer.soundInt = Int64(soundInt)
+        timer.addToInnerTimers(newInnerTimer)
+        saveItems()
+    }
+    
+    mutating func removeInnerTimer(_ innerTimer: InnerTimer) {
+        context.delete(innerTimer)
+        saveItems()
+    }
+    
+    func updateTimerSound(timer: TTimer, newSoundInt: Int) {
         timer.soundInt = Int16(newSoundInt)
         saveItems()
     }
     
-    func updateTimerTotalSeconds(timer: TenTimer, newTotalSeconds: Int) {
+    func updateTimerTotalSeconds(timer: TTimer, newTotalSeconds: Int) {
         timer.totalSeconds = Int32(newTotalSeconds)
         saveItems()
     }
     
-    func updateTimerTitle(timer: TenTimer, newTitle: String) {
+    func updateTimerTitle(timer: TTimer, newTitle: String) {
         timer.title = newTitle
         saveItems()
     }
     
-    func updateTimerColor(timer: TenTimer, newColorInt: Int) {
+    func updateTimerColor(timer: TTimer, newColorInt: Int) {
         timer.colorInt = Int16(newColorInt)
         saveItems()
     }
     
-    mutating func loadTimers(with request: NSFetchRequest<TenTimer> = TenTimer.fetchRequest()){
+    mutating func loadTimers(with request: NSFetchRequest<TTimer> = TTimer.fetchRequest()){
         do {
             request.sortDescriptors = [NSSortDescriptor(key: "timerNumber", ascending: true)]
             timerArray = try context.fetch(request)

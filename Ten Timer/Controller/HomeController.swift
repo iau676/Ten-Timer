@@ -171,7 +171,7 @@ extension HomeController: UICollectionViewDelegateFlowLayout {
 //MARK: - TimerCellDelegate
 
 extension HomeController: TimerCellDelegate {
-    func settingsPressed(_ timer: TenTimer) {
+    func settingsPressed(_ timer: TTimer) {
         let controller = SettingsController(timer: timer)
         controller.delegate = self
         controller.modalPresentationStyle = .overFullScreen

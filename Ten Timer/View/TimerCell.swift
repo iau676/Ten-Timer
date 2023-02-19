@@ -8,14 +8,14 @@
 import UIKit
 
 protocol TimerCellDelegate: AnyObject {
-    func settingsPressed(_ timer: TenTimer)
+    func settingsPressed(_ timer: TTimer)
 }
 
 class TimerCell: UICollectionViewCell {
     
     //MARK: - Properties
     
-    var timer: TenTimer? {
+    var timer: TTimer? {
         didSet { configure() }
     }
     

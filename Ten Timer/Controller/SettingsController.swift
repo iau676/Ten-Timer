@@ -15,7 +15,7 @@ class SettingsController: UIViewController {
     
     //MARK: - Properties
     
-    private let timer: TenTimer
+    private let timer: TTimer
     weak var delegate: SettingsControllerDelegate?
     
     private let titleTextField = UITextField()
@@ -43,7 +43,7 @@ class SettingsController: UIViewController {
     
     //MARK: - Lifecycle
     
-    init(timer: TenTimer) {
+    init(timer: TTimer) {
         self.timer = timer
         super.init(nibName: nil, bundle: nil)
     }

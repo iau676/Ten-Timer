@@ -18,7 +18,7 @@ class TimerController: UIViewController {
     
     //MARK: - Properties
     
-    private let timer: TenTimer
+    private let timer: TTimer
     
     private let stopButton = UIButton()
     private let timerView = UIView()
@@ -29,7 +29,7 @@ class TimerController: UIViewController {
     
     //MARK: - Lifecycle
     
-    init(timer: TenTimer) {
+    init(timer: TTimer) {
         self.timer = timer
         super.init(nibName: nil, bundle: nil)
     }

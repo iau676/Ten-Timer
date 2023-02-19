@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		700656B9299BD254003FEA91 /* TimerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700656B8299BD254003FEA91 /* TimerController.swift */; };
+		70B9062329A2B81B00FC83CB /* TTimer+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B9061F29A2B81B00FC83CB /* TTimer+CoreDataClass.swift */; };
+		70B9062429A2B81B00FC83CB /* TTimer+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B9062029A2B81B00FC83CB /* TTimer+CoreDataProperties.swift */; };
+		70B9062529A2B81B00FC83CB /* InnerTimer+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B9062129A2B81B00FC83CB /* InnerTimer+CoreDataClass.swift */; };
+		70B9062629A2B81B00FC83CB /* InnerTimer+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B9062229A2B81B00FC83CB /* InnerTimer+CoreDataProperties.swift */; };
 		70BCD5A729999C59000D89B7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BCD5A629999C59000D89B7 /* AppDelegate.swift */; };
 		70BCD5B129999C59000D89B7 /* TenTimer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 70BCD5AF29999C59000D89B7 /* TenTimer.xcdatamodeld */; };
 		70BCD5B329999C5E000D89B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70BCD5B229999C5E000D89B7 /* Assets.xcassets */; };
@@ -139,6 +143,10 @@
 
 /* Begin PBXFileReference section */
 		700656B8299BD254003FEA91 /* TimerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerController.swift; sourceTree = "<group>"; };
+		70B9061F29A2B81B00FC83CB /* TTimer+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TTimer+CoreDataClass.swift"; sourceTree = "<group>"; };
+		70B9062029A2B81B00FC83CB /* TTimer+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TTimer+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		70B9062129A2B81B00FC83CB /* InnerTimer+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InnerTimer+CoreDataClass.swift"; sourceTree = "<group>"; };
+		70B9062229A2B81B00FC83CB /* InnerTimer+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InnerTimer+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		70BCD5A329999C59000D89B7 /* Ten Timer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ten Timer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		70BCD5A629999C59000D89B7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		70BCD5B029999C59000D89B7 /* Ten_Timer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Ten_Timer.xcdatamodel; sourceTree = "<group>"; };
@@ -318,6 +326,10 @@
 		70BCD5BF29999E89000D89B7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				70B9061F29A2B81B00FC83CB /* TTimer+CoreDataClass.swift */,
+				70B9062029A2B81B00FC83CB /* TTimer+CoreDataProperties.swift */,
+				70B9062129A2B81B00FC83CB /* InnerTimer+CoreDataClass.swift */,
+				70B9062229A2B81B00FC83CB /* InnerTimer+CoreDataProperties.swift */,
 				70BCD5AF29999C59000D89B7 /* TenTimer.xcdatamodeld */,
 				70BCD5D62999CB2C000D89B7 /* TT.swift */,
 				70C9EF8229A0A4DF00BCDF00 /* Color.swift */,
@@ -673,10 +685,13 @@
 				70BCD5BE29999D41000D89B7 /* HomeController.swift in Sources */,
 				70BCD5CB2999A278000D89B7 /* TimerCell.swift in Sources */,
 				70C9EEAB299E567A00BCDF00 /* SoundCell.swift in Sources */,
+				70B9062429A2B81B00FC83CB /* TTimer+CoreDataProperties.swift in Sources */,
 				70BCD5B129999C59000D89B7 /* TenTimer.xcdatamodeld in Sources */,
+				70B9062629A2B81B00FC83CB /* InnerTimer+CoreDataProperties.swift in Sources */,
 				70C9EF8329A0A4DF00BCDF00 /* Color.swift in Sources */,
 				70BCD5D72999CB2C000D89B7 /* TT.swift in Sources */,
 				700656B9299BD254003FEA91 /* TimerController.swift in Sources */,
+				70B9062529A2B81B00FC83CB /* InnerTimer+CoreDataClass.swift in Sources */,
 				70C9EF7B299FA63500BCDF00 /* Sound.swift in Sources */,
 				70C9EF7F299FB58D00BCDF00 /* ColorController.swift in Sources */,
 				70BCD5CF2999A427000D89B7 /* UIButton+Extensions.swift in Sources */,
@@ -684,6 +699,7 @@
 				70BCD5D32999C24E000D89B7 /* UserDefaultsManager.swift in Sources */,
 				70C9EF7D299FB4A400BCDF00 /* ColorCell.swift in Sources */,
 				70BCD5D92999D018000D89B7 /* UITextField+Extensions.swift in Sources */,
+				70B9062329A2B81B00FC83CB /* TTimer+CoreDataClass.swift in Sources */,
 				70BCD5D12999A44C000D89B7 /* UIImage+Extensions.swift in Sources */,
 				70BCD5C529999F03000D89B7 /* UIView+Extensions.swift in Sources */,
 				70BCD5DC2999EA41000D89B7 /* TimerViewModel.swift in Sources */,
