@@ -16,7 +16,11 @@ class SettingsController: UIViewController {
     //MARK: - Properties
     
     private let timer: TTimer
+    private let index: Int
+    
     weak var delegate: SettingsControllerDelegate?
+    
+    private let lineView = UIView()
     
     private let titleTextField = UITextField()
     private let pickerView = UIPickerView()
@@ -25,26 +29,20 @@ class SettingsController: UIViewController {
     private let colorButton = makeButton(withText: "")
     
     private let soundLabel = makeLabel(withText: "Sound")
-    private lazy var soundButton = makeButton(withText: "\(soundArray[Int(timer.soundInt)].name)")
+    private lazy var soundButton = makeButton(withText: "\(soundArray[Int(timer.innerTimerArray[index].soundInt)].name)")
     
     private lazy var otherSettingsButton = UIButton()
-    
-    private let lineView = UIView()
+    private lazy var removeButton = UIButton()
     
     private var hour = 0
     private var minute = 0
     private var second = 0
     
-    private let hours = [00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23]
-    
-    private let minutes = [00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59]
-    
-    private let seconds = [00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59]
-    
     //MARK: - Lifecycle
     
-    init(timer: TTimer) {
+    init(timer: TTimer, index: Int) {
         self.timer = timer
+        self.index = index
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -64,17 +62,33 @@ class SettingsController: UIViewController {
     //MARK: - Selectors
     
     @objc private func soundButtonPressed() {
-        let controller = SoundsController(timer: timer)
+        let controller = SoundsController(innerTimer: timer.innerTimerArray[index])
         controller.delegate = self
         controller.modalPresentationStyle = .formSheet
         present(controller, animated: true)
     }
     
     @objc private func colorButtonPressed() {
-        let controller = ColorController(timer: timer)
+        let controller = ColorController(innerTimer: timer.innerTimerArray[index])
         controller.delegate = self
         controller.modalPresentationStyle = .formSheet
         present(controller, animated: true)
+    }
+    
+    @objc private func deleteBarButtonPressed() {
+        let alert = UIAlertController(title: nil, message: "Are you sure you want to delete?",
+                                      preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
+            self.dismiss(animated: true) {
+                TT.shared.removeInnerTimer(timer: self.timer, index: self.index)
+                self.navigationController?.popViewController(animated: true)
+            }
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        present(alert, animated: true)
     }
     
     //MARK: - Helpers
@@ -89,13 +103,13 @@ class SettingsController: UIViewController {
         pickerView.setViewCornerRadius(10)
         
         titleTextField.placeholder = "Title"
-        titleTextField.text = timer.title
+        titleTextField.text = timer.innerTimerArray[index].title
         titleTextField.backgroundColor = .clear
         titleTextField.textAlignment = .center
         titleTextField.delegate = self
         titleTextField.setLeftPaddingPoints(8)
   
-        let hex = colorArray[Int(timer.colorInt)].hex
+        let hex = colorArray[Int(timer.innerTimerArray[index].colorInt)].hex
         colorButton.backgroundColor = UIColor(hex: "#\(hex)")
         colorButton.addTarget(self, action: #selector(colorButtonPressed), for: .touchUpInside)
         
@@ -151,17 +165,21 @@ class SettingsController: UIViewController {
     }
     
     private func configureNavigationBar() {
-        title = "\(timer.timerNumber+1)"
+        title = "\(timer.timerNumber+1).\(index+1)"
         navigationController?.navigationBar.topItem?.backButtonTitle = "Timers"
         
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.tintColor = .label
+        
+        let deleteBarButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteBarButtonPressed))
+        
+        navigationItem.rightBarButtonItem = index == 0 ? UIBarButtonItem() : deleteBarButton
     }
     
     private func configurePickerView() {
-        let timeInt = TT.shared.getTimeInt(Int(timer.totalSeconds))
+        let timeInt = TT.shared.getTimeInt(Int(timer.innerTimerArray[index].seconds))
         hour = timeInt.0
         minute = timeInt.1
         second = timeInt.2
@@ -179,6 +197,8 @@ class SettingsController: UIViewController {
     }
 }
 
+//MARK: - UITextFieldDelegate
+
 extension SettingsController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -188,7 +208,7 @@ extension SettingsController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         guard let text = textField.text else { return }
-        TT.shared.updateTimerTitle(timer: timer, newTitle: text)
+        TT.shared.updateInnerTimerTitle(timer: timer, index: index, newTitle: text)
         delegate?.reloadData()
     }
 }
@@ -232,7 +252,7 @@ extension SettingsController: UIPickerViewDataSource, UIPickerViewDelegate {
         }
         checkZero()
         let newTotalSeconds = (hour*3600) + (minute*60) + second
-        TT.shared.updateTimerTotalSeconds(timer: timer, newTotalSeconds: newTotalSeconds)
+        TT.shared.updateInnerTimerSeconds(timer: timer, index: index, seconds: newTotalSeconds)
         delegate?.reloadData()
     }
 }
@@ -250,7 +270,7 @@ extension SettingsController {
     }
     
     @objc func respondToSwipeRightGesture(gesture: UISwipeGestureRecognizer) {
-        self.navigationController?.popToRootViewController(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
 }
 
@@ -258,7 +278,7 @@ extension SettingsController {
 
 extension SettingsController: SoundsControllerDelegate {
     func updateSound(newSoundInt: Int) {
-        TT.shared.updateTimerSound(timer: timer, newSoundInt: newSoundInt)
+        TT.shared.updateInnerTimerSound(innerTimer: timer.innerTimerArray[index], newSoundInt: newSoundInt)
         soundButton.setTitle("\(soundArray[newSoundInt].name)", for: .normal)
     }
 }
@@ -267,7 +287,8 @@ extension SettingsController: SoundsControllerDelegate {
 
 extension SettingsController: ColorControllerDelegate {
     func updateColor(newColorInt: Int) {
-        TT.shared.updateTimerColor(timer: timer, newColorInt: newColorInt)
+        TT.shared.updateInnerTimerColor(innerTimer: timer.innerTimerArray[index],
+                                        newColorInt: newColorInt)
         let hex = colorArray[newColorInt].hex
         colorButton.backgroundColor = UIColor(hex: "#\(hex)")
     }

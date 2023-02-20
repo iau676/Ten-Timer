@@ -14,6 +14,11 @@ enum StopOptions {
     case user
 }
 
+enum TimerMode {
+    case all
+    case single
+}
+
 class TimerController: UIViewController {
     
     //MARK: - Properties
@@ -23,9 +28,12 @@ class TimerController: UIViewController {
     private let stopButton = UIButton()
     private let timerView = UIView()
     private var timeR = Timer()
-    private var timerCounter: CGFloat = UDM.getCGFloatValue(UDM.currentTimerCounter)
+    private var timerCounter: CGFloat = UDM.getCGFloatValue(UDM.currentTimerCounter)+1
     private var totalSecond: CGFloat = 0
     let notificationCenter = UNUserNotificationCenter.current()
+    
+    var currentTimer = 0
+    var timerMode: TimerMode = .all
     
     //MARK: - Lifecycle
     
@@ -44,7 +52,6 @@ class TimerController: UIViewController {
         style()
         layout()
         
-        handleStart()
         self.timeR = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
             self.handleTimer()
         })
@@ -59,8 +66,7 @@ class TimerController: UIViewController {
     //MARK: - Helpers
     
     func getNotificationSound() -> UNNotificationSound? {
-        let timerSoundInt = Int(timer.soundInt)
-        
+        let timerSoundInt = Int(timer.innerTimerArray[currentTimer].soundInt)
         switch timerSoundInt {
         case 0:
             return nil
@@ -113,13 +119,6 @@ class TimerController: UIViewController {
         }
     }
     
-    private func handleStart() {
-        totalSecond = CGFloat(timer.totalSeconds)
-        let hex = colorArray[Int(timer.colorInt)].hex
-        timerView.backgroundColor = UIColor(hex: "#\(hex)")
-        timerCounter += 1
-    }
-    
     private func handleStop(_ stopOption: StopOptions? = .auto) {
         timeR.invalidate()
         if stopOption == .auto {
@@ -127,7 +126,7 @@ class TimerController: UIViewController {
                 AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
             }
             
-            let sound = soundArray[Int(timer.soundInt)]
+            let sound = soundArray[Int(timer.innerTimerArray[currentTimer].soundInt)]
             Player.shared.play(sound: sound)
         }
         navigationController?.popViewController(animated: false)
@@ -136,7 +135,16 @@ class TimerController: UIViewController {
     private func style(){
         view.backgroundColor = .systemGroupedBackground
         
-        stopButton.setTitle("\(timer.totalSeconds)", for: .normal)
+        if timerMode == .all {
+            totalSecond = CGFloat(timer.totalSeconds)
+        } else {
+            totalSecond = CGFloat(timer.innerTimerArray[currentTimer].seconds)
+        }
+        
+        let hex = colorArray[Int(timer.innerTimerArray[currentTimer].colorInt)].hex
+        timerView.backgroundColor = UIColor(hex: "#\(hex)")
+        
+        stopButton.setTitle("\(Int(totalSecond))", for: .normal)
         stopButton.titleLabel?.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 23)
         stopButton.backgroundColor = .systemRed
         stopButton.setTitleColor(.white, for: .normal)
@@ -159,7 +167,7 @@ class TimerController: UIViewController {
     }
     
     private func configureNavigationBar() {
-        title = "\(timer.timerNumber+1)"
+        title = timerMode == .all ? "\(timer.timerNumber+1)" : "\(timer.timerNumber+1).\(timer.innerTimerArray[currentTimer].timerNumber+1)"
         navigationItem.leftBarButtonItem = UIBarButtonItem()
         
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)

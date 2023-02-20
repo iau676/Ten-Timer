@@ -99,11 +99,11 @@ class TimerCell: UICollectionViewCell {
         
         timeLabel.text = "\(viewModel.totalSecondsStr)"
         numberButton.setTitle("\(timer.timerNumber+1)", for: .normal)
-        contentView.backgroundColor = viewModel.colorName
+        contentView.backgroundColor = viewModel.color
         
         settingsButton.setImageWithRenderingMode(image: UIImage(named: "dots"),
                                                  width: 15, height: 15,
-                                                 color: viewModel.colorName)
+                                                 color: viewModel.color)
         
         titleLabel.text = viewModel.title
     }

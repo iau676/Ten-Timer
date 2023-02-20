@@ -19,54 +19,83 @@ struct TT {
         newTimer.date = Date()
         newTimer.uuid = UUID()
         newTimer.totalSeconds = defaultSeconds[number]
-        newTimer.timerNumber = Int16(number)
-        newTimer.soundInt = Int16(number)
-        newTimer.colorInt = Int16(number)
-        newTimer.isVibrate = true
-        newTimer.isCountdownSpeech = false
-        newTimer.countdownSpeechType = 0
-        newTimer.countdownType = 0
-        newTimer.alertType = 0
+        newTimer.timerNumber = Int64(number)
         newTimer.title = ""
         newTimer.subtitle = ""
-        saveItems()
-    }
-    
-    mutating func appendInnerTimer(to timer: TTimer, title: String, seconds: Int, colorInt: Int, soundInt: Int) {
+        
         let newInnerTimer = InnerTimer(context: self.context)
         newInnerTimer.date = Date()
         newInnerTimer.uuid = UUID()
-        newInnerTimer.title = title
-        newInnerTimer.seconds = Int64(seconds)
-        newInnerTimer.colorInt = Int64(colorInt)
-        newInnerTimer.soundInt = Int64(soundInt)
+        newInnerTimer.title = "Title\(number+1)"
+        newInnerTimer.seconds = Int64(defaultSeconds[number])
+        newInnerTimer.colorInt = Int64(number)
+        newInnerTimer.soundInt = Int64(number)
+        newInnerTimer.timerNumber = Int64(newTimer.innerTimerArray.count)
+        newInnerTimer.isVibrate = true
+        
+        newTimer.addToInnerTimers(newInnerTimer)
+        
+        saveContext()
+    }
+    
+    mutating func addInnerTimer(timer: TTimer) {
+        let timerNumber = Int(timer.timerNumber)
+        let innerTimerArrayCount = Int(timer.innerTimerArray.count)
+        
+        let newInnerTimer = InnerTimer(context: self.context)
+        newInnerTimer.date = Date()
+        newInnerTimer.uuid = UUID()
+        newInnerTimer.title = "Title\(timerNumber+1).\(innerTimerArrayCount+1)"
+        newInnerTimer.seconds = defaultSeconds[timerNumber]
+        newInnerTimer.colorInt = Int64(timerNumber)
+        newInnerTimer.soundInt = Int64(timerNumber)
+        newInnerTimer.timerNumber = Int64(timer.innerTimerArray.count)
+        newInnerTimer.isVibrate = true
+        
+        timer.totalSeconds = timer.totalSeconds + defaultSeconds[timerNumber]
         timer.addToInnerTimers(newInnerTimer)
-        saveItems()
+        
+        saveContext()
     }
     
-    mutating func removeInnerTimer(_ innerTimer: InnerTimer) {
-        context.delete(innerTimer)
-        saveItems()
+    mutating func removeInnerTimer(timer: TTimer, index: Int) {
+        timer.totalSeconds -= timer.innerTimerArray[index].seconds
+        context.delete(timer.innerTimerArray[index])
+        saveContext()
     }
     
-    func updateTimerSound(timer: TTimer, newSoundInt: Int) {
-        timer.soundInt = Int16(newSoundInt)
-        saveItems()
+    func updateInnerTimerNumber(innerTimer: InnerTimer, number: Int) {
+        innerTimer.timerNumber = Int64(number)
+        saveContext()
     }
     
-    func updateTimerTotalSeconds(timer: TTimer, newTotalSeconds: Int) {
-        timer.totalSeconds = Int32(newTotalSeconds)
-        saveItems()
+    func updateInnerTimerTitle(timer: TTimer, index: Int, newTitle: String) {
+        timer.innerTimerArray[index].title = newTitle
+        saveContext()
     }
     
-    func updateTimerTitle(timer: TTimer, newTitle: String) {
-        timer.title = newTitle
-        saveItems()
+    func updateInnerTimerSeconds(timer: TTimer, index: Int, seconds: Int) {
+        timer.innerTimerArray[index].seconds = Int64(seconds)
+        updateTimerTotalSeconds(timer: timer)
+        saveContext()
     }
     
-    func updateTimerColor(timer: TTimer, newColorInt: Int) {
-        timer.colorInt = Int16(newColorInt)
-        saveItems()
+    func updateTimerTotalSeconds(timer: TTimer) {
+        var newTotalSeconds = 0
+        for i in 0..<timer.innerTimerArray.count {
+            newTotalSeconds += Int(timer.innerTimerArray[i].seconds)
+        }
+        timer.totalSeconds = Int64(newTotalSeconds)
+    }
+    
+    func updateInnerTimerColor(innerTimer: InnerTimer, newColorInt: Int) {
+        innerTimer.colorInt = Int64(newColorInt)
+        saveContext()
+    }
+    
+    func updateInnerTimerSound(innerTimer: InnerTimer, newSoundInt: Int) {
+        innerTimer.soundInt = Int64(newSoundInt)
+        saveContext()
     }
     
     mutating func loadTimers(with request: NSFetchRequest<TTimer> = TTimer.fetchRequest()){
@@ -78,7 +107,7 @@ struct TT {
         }
     }
     
-    func saveItems() {
+    func saveContext() {
         do {
           try context.save()
         } catch {

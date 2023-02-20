@@ -2,7 +2,7 @@
 //  InnerTimer+CoreDataClass.swift
 //  Ten Timer
 //
-//  Created by ibrahim uysal on 19.02.2023.
+//  Created by ibrahim uysal on 20.02.2023.
 //
 //
 

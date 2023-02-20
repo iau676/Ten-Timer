@@ -3,31 +3,25 @@
     <entity name="InnerTimer" representedClassName="InnerTimer" syncable="YES">
         <attribute name="colorInt" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="isVibrate" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="seconds" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="soundInt" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="timerNumber" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <relationship name="tTimer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TTimer" inverseName="innerTimers" inverseEntity="TTimer"/>
     </entity>
     <entity name="TTimer" representedClassName="TTimer" syncable="YES">
-        <attribute name="alertType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="colorInt" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="countdownSpeechType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="countdownType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="isBasic" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="isCountdownSpeech" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="isVibrate" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="soundInt" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="subtitle" optional="YES" attributeType="String"/>
-        <attribute name="timerNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="timerNumber" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="title" optional="YES" attributeType="String"/>
-        <attribute name="totalSeconds" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="totalSeconds" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <relationship name="innerTimers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InnerTimer" inverseName="tTimer" inverseEntity="InnerTimer"/>
     </entity>
     <elements>
-        <element name="InnerTimer" positionX="-63" positionY="90" width="128" height="134"/>
-        <element name="TTimer" positionX="-63" positionY="-18" width="128" height="254"/>
+        <element name="InnerTimer" positionX="-63" positionY="90" width="128" height="164"/>
+        <element name="TTimer" positionX="-63" positionY="-18" width="128" height="134"/>
     </elements>
 </model>

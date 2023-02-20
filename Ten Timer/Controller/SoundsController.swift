@@ -18,7 +18,7 @@ class SoundsController: UIViewController {
     
     //MARK: - Properties
     
-    private let timer: TTimer
+    private let innerTimer: InnerTimer
     weak var delegate: SoundsControllerDelegate?
     
     private let lineView = UIView()
@@ -30,8 +30,8 @@ class SoundsController: UIViewController {
     
     //MARK: - Lifecycle
     
-    init(timer: TTimer) {
-        self.timer = timer
+    init(innerTimer: InnerTimer) {
+        self.innerTimer = innerTimer
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -64,7 +64,7 @@ class SoundsController: UIViewController {
     
     private func configureSelectedSound() {
         resetCheckmark()
-        soundArray[Int(timer.soundInt)].selected = true
+        soundArray[Int(innerTimer.colorInt)].selected = true
         tableView.reloadData()
     }
     

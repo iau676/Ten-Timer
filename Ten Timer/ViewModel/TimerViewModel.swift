@@ -15,12 +15,12 @@ struct TimerViewModel {
         return "\(TT.shared.getTimeString(Int(timer.totalSeconds)))"
     }
     
-    var colorName: UIColor {
-        let hex = colorArray[Int(timer.colorInt)].hex
+    var color: UIColor {
+        let hex = colorArray[Int(timer.innerTimerArray[0].colorInt)].hex
         return UIColor(hex: "#\(hex)") ?? .darkGray
     }
     
-    var seconds: Int32 {
+    var seconds: Int64 {
         return timer.totalSeconds
     }
     

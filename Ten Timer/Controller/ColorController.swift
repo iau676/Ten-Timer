@@ -17,7 +17,7 @@ class ColorController: UIViewController {
     
     //MARK: - Properties
     
-    private let timer: TTimer
+    private let innerTimer: InnerTimer
     weak var delegate: ColorControllerDelegate?
     
     private let lineView = UIView()
@@ -37,8 +37,8 @@ class ColorController: UIViewController {
     
     //MARK: - Lifecycle
     
-    init(timer: TTimer) {
-        self.timer = timer
+    init(innerTimer: InnerTimer) {
+        self.innerTimer = innerTimer
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -57,7 +57,7 @@ class ColorController: UIViewController {
     
     private func configureSelectedColor() {
         resetCheckmark()
-        colorArray[Int(timer.colorInt)].selected = true
+        colorArray[Int(innerTimer.colorInt)].selected = true
         colorCV.reloadData()
     }
     
