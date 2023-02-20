@@ -156,6 +156,7 @@ extension HomeController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         UDM.setValue(indexPath.row, UDM.selectedTimerIndex)
         UDM.setValue(0, UDM.currentTimerCounter)
+        UDM.setValue(0, UDM.currentTimer)
         goTimer()
     }
 }

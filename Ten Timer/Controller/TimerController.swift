@@ -32,8 +32,12 @@ class TimerController: UIViewController {
     private var totalSecond: CGFloat = 0
     let notificationCenter = UNUserNotificationCenter.current()
     
-    var currentTimer = 0
+    var currentTimer: Int = UDM.getIntValue(UDM.currentTimer)
     var timerMode: TimerMode = .all
+    
+    var viewArray: [UIView] = []
+    var secondsArray: [Int] = []
+    var compoundSecondsArray: [Int] = []
     
     //MARK: - Lifecycle
     
@@ -49,6 +53,7 @@ class TimerController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavigationBar()
+        configureViews()
         style()
         layout()
         
@@ -58,6 +63,25 @@ class TimerController: UIViewController {
     }
     
     //MARK: - Selectors
+    
+    private func configureViews() {
+        if timerMode == .all {
+            let innerTimerArray = timer.innerTimerArray
+            for i in 0..<innerTimerArray.count {
+                let newView = UIView()
+                newView.backgroundColor = UIColor(hex: "#\(colorArray[Int(innerTimerArray[i].colorInt)].hex)")
+                secondsArray.append(Int(innerTimerArray[i].seconds))
+                compoundSecondsArray.append(i)
+                viewArray.append(newView)
+            }
+            for i in 0..<secondsArray.count {
+                for j in 0...i {
+                    compoundSecondsArray[i] += secondsArray[j]
+                }
+                compoundSecondsArray[i] -= i
+            }
+        }
+    }
     
     @objc private func stopButtonPressed() {
         handleStop(.user)
@@ -92,6 +116,7 @@ class TimerController: UIViewController {
             self.notificationCenter.removeAllPendingNotificationRequests()
             
             UDM.setValue(timerCounter, UDM.lastTimerCounter)
+            UDM.setValue(currentTimer, UDM.currentTimer)
             UDM.setValue(Date(), UDM.currentNotificationDate)
             UDM.setValue(timer.timerNumber, UDM.selectedTimerIndex)
             
@@ -113,9 +138,35 @@ class TimerController: UIViewController {
             if timerCounter == totalSecond+1 {
                 handleStop()
             } else {
-                timerView.setHeightWithAnimation(view.bounds.height/totalSecond*timerCounter, animateTime: 1.5)
+                checkIfInnerTimerCompleted()
+                handleAnimation()
                 stopButton.setTitle("\(Int(totalSecond-timerCounter+1))", for: .normal)
             }
+        }
+    }
+    
+    private func checkIfInnerTimerCompleted() {
+        if timerMode == .all {
+            if Int(timerCounter) == compoundSecondsArray[currentTimer]+1 {
+                let sound = soundArray[Int(timer.innerTimerArray[currentTimer].soundInt)]
+                Player.shared.play(sound: sound)
+                currentTimer += 1
+            }
+        }
+    }
+    
+    private func handleAnimation() {
+        if timerMode == .single {
+            timerView.setHeightWithAnimation(view.bounds.height/totalSecond*timerCounter, animateTime: 1.5)
+        } else {
+            let second = CGFloat(secondsArray[currentTimer])
+            var timerCounter = self.timerCounter
+            
+            if currentTimer > 0 {
+                timerCounter = self.timerCounter - CGFloat(compoundSecondsArray[currentTimer-1])
+            }
+            
+            viewArray[currentTimer].setHeightWithAnimation(view.bounds.height/second*timerCounter, animateTime: 1.5)
         }
     }
     
@@ -160,6 +211,17 @@ class TimerController: UIViewController {
         timerView.anchor(bottom: view.bottomAnchor)
         timerView.setWidth(width: view.frame.width)
         timerView.setHeight(height: 0)
+        
+        for i in 0..<viewArray.count {
+            view.addSubview(viewArray[i])
+            viewArray[i].setHeight(height: 0)
+            viewArray[i].setWidth(width: view.bounds.width/CGFloat(viewArray.count))
+            if i == 0 {
+               viewArray[i].anchor(left: view.leftAnchor, bottom: view.bottomAnchor)
+            } else {
+               viewArray[i].anchor(left: viewArray[i-1].rightAnchor, bottom: view.bottomAnchor)
+            }
+       }
         
         view.addSubview(stopButton)
         stopButton.centerY(inView: view)
