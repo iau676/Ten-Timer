@@ -45,6 +45,7 @@ class InnerTimerController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavigationBar()
+        addGestureRecognizer()
         style()
         layout()
         checkInnerTimerCount()
@@ -130,6 +131,22 @@ extension InnerTimerController: UICollectionViewDataSource {
 extension InnerTimerController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: (view.bounds.width-3*16+4)/2, height: (view.safeAreaLayoutGuide.layoutFrame.height-5*16)/5)
+    }
+}
+
+//MARK: - Swipe Gesture
+
+extension InnerTimerController {
+    func addGestureRecognizer(){
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeRightGesture))
+        swipeRight.direction = .right
+        
+        view.addGestureRecognizer(swipeRight)
+    }
+    
+    @objc func respondToSwipeRightGesture(gesture: UISwipeGestureRecognizer) {
+        self.navigationController?.popViewController(animated: true)
     }
 }
 
