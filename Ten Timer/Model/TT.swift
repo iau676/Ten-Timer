@@ -127,6 +127,7 @@ struct TT {
     
     mutating func updateUserDefaultsForTimer() {
         self.loadTimers()
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
         let timer = self.timerArray[UDM.getIntValue(UDM.selectedTimerIndex)]
         guard let currentNotificationDate = UDM.getDateValue(UDM.currentNotificationDate) else { return }
         let dateComponents = Calendar.current.dateComponents([.second], from: currentNotificationDate, to: Date())

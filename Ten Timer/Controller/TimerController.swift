@@ -121,7 +121,7 @@ class TimerController: UIViewController {
             let sound = soundArray[Int(timer.innerTimerArray[currentTimer].soundInt)]
             Player.shared.play(sound: sound)
         }
-        navigationController?.popViewController(animated: false)
+        navigationController?.popToRootViewController(animated: false)
     }
     
     //MARK: - Notification
@@ -149,22 +149,7 @@ class TimerController: UIViewController {
             UDM.setValue(timer.timerNumber, UDM.selectedTimerIndex)
             self.notificationCenter.removeAllPendingNotificationRequests()
             
-            if compoundSecondsArray.count == 1 {
-                let content = UNMutableNotificationContent()
-                content.title = "\(timer.timerNumber): Completed"
-                content.sound = getNotificationSound()
-                
-                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: remindSecond, repeats: false)
-                let id = UUID().uuidString
-                let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
-                
-                self.notificationCenter.add(request) { (error) in
-                    if(error != nil){
-                        print("Error " + error.debugDescription)
-                        return
-                    }
-                }
-            } else {
+            if timerMode == .all {
                 for i in currentTimer..<compoundSecondsArray.count {
                     let newRemindSecond = CGFloat(compoundSecondsArray[i]) - ((timerCounter)-1)
                     currentTimer = i //sound
@@ -184,6 +169,21 @@ class TimerController: UIViewController {
                                 return
                             }
                         }
+                    }
+                }
+            } else {
+                let content = UNMutableNotificationContent()
+                content.title = "\(timer.timerNumber): Completed"
+                content.sound = getNotificationSound()
+                
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: remindSecond, repeats: false)
+                let id = UUID().uuidString
+                let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
+                
+                self.notificationCenter.add(request) { (error) in
+                    if(error != nil){
+                        print("Error " + error.debugDescription)
+                        return
                     }
                 }
             }
@@ -207,6 +207,13 @@ class TimerController: UIViewController {
                     compoundSecondsArray[i] += secondsArray[j]
                 }
                 compoundSecondsArray[i] -= i
+            }
+        }
+        if currentTimer > 0 && timerMode == .all {
+            for i in 0...currentTimer {
+                DispatchQueue.main.async {
+                    self.viewArray[i].setHeightWithAnimation(self.view.bounds.height, animateTime: 1.5)
+                }
             }
         }
     }

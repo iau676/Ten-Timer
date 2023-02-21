@@ -113,6 +113,10 @@ extension InnerTimerController: UICollectionViewDataSource {
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        UDM.setValue(timer.timerNumber, UDM.selectedTimerIndex)
+        UDM.setValue(0, UDM.currentTimerCounter)
+        UDM.setValue(0, UDM.currentTimer)
+        UDM.setValue(true, UDM.fromInner)
         let controller = TimerController(timer: timer)
         controller.currentTimer = indexPath.row
         controller.timerMode = .single

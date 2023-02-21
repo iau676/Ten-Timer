@@ -64,6 +64,11 @@ class HomeController: UIViewController {
         DispatchQueue.main.async {
             let timer = TT.shared.timerArray[UDM.getIntValue(UDM.selectedTimerIndex)]
             let controller = TimerController(timer: timer)
+            
+            if UDM.getBoolValue(UDM.fromInner) {
+                controller.timerMode = .single
+            }
+            
             controller.modalPresentationStyle = .overFullScreen
             self.navigationController?.pushViewController(controller, animated: false)
         }
@@ -157,6 +162,7 @@ extension HomeController: UICollectionViewDataSource {
         UDM.setValue(indexPath.row, UDM.selectedTimerIndex)
         UDM.setValue(0, UDM.currentTimerCounter)
         UDM.setValue(0, UDM.currentTimer)
+        UDM.setValue(false, UDM.fromInner)
         goTimer()
     }
 }

@@ -41,8 +41,8 @@ class TimerCell: UICollectionViewCell {
     lazy var settingsButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = Colors.f6f6f6
-        button.setDimensions(height: 25, width: 25)
-        button.layer.cornerRadius = 25 / 2
+        button.setDimensions(height: 26, width: 26)
+        button.layer.cornerRadius = 26 / 2
         button.addTarget(self, action: #selector(settingsPressed), for: .touchUpInside)
         return button
     }()
