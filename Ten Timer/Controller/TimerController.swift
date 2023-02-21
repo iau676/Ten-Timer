@@ -64,70 +64,11 @@ class TimerController: UIViewController {
     
     //MARK: - Selectors
     
-    private func configureViews() {
-        if timerMode == .all {
-            let innerTimerArray = timer.innerTimerArray
-            for i in 0..<innerTimerArray.count {
-                let newView = UIView()
-                newView.backgroundColor = UIColor(hex: "#\(colorArray[Int(innerTimerArray[i].colorInt)].hex)")
-                secondsArray.append(Int(innerTimerArray[i].seconds))
-                compoundSecondsArray.append(i)
-                viewArray.append(newView)
-            }
-            for i in 0..<secondsArray.count {
-                for j in 0...i {
-                    compoundSecondsArray[i] += secondsArray[j]
-                }
-                compoundSecondsArray[i] -= i
-            }
-        }
-    }
-    
     @objc private func stopButtonPressed() {
         handleStop(.user)
     }
     
     //MARK: - Helpers
-    
-    func getNotificationSound() -> UNNotificationSound? {
-        let timerSoundInt = Int(timer.innerTimerArray[currentTimer].soundInt)
-        switch timerSoundInt {
-        case 0:
-            return nil
-        case 1:
-            return UNNotificationSound.default
-        default:
-            let soundName = soundArray[timerSoundInt].id
-            return UNNotificationSound(named: UNNotificationSoundName(rawValue: "\(soundName).m4a"))
-        }
-    }
-    
-    func setNotification(remindSecond: CGFloat){
-        handleStop(.user)
-        if remindSecond > 0 {
-            let content = UNMutableNotificationContent()
-            content.title = "Completed"
-            content.sound = getNotificationSound()
-            
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: remindSecond, repeats: false)
-            let id = UUID().uuidString
-            let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
-            
-            self.notificationCenter.removeAllPendingNotificationRequests()
-            
-            UDM.setValue(timerCounter, UDM.lastTimerCounter)
-            UDM.setValue(currentTimer, UDM.currentTimer)
-            UDM.setValue(Date(), UDM.currentNotificationDate)
-            UDM.setValue(timer.timerNumber, UDM.selectedTimerIndex)
-            
-            self.notificationCenter.add(request) { (error) in
-                if(error != nil){
-                    print("Error " + error.debugDescription)
-                    return
-                }
-            }
-        }
-    }
     
     private func handleTimer() {
         timerCounter += 1
@@ -135,7 +76,7 @@ class TimerController: UIViewController {
         if UIApplication.shared.applicationState != .active {
             setNotification(remindSecond: totalSecond-(timerCounter-1))
         } else {
-            if timerCounter == totalSecond+1 {
+            if timerCounter > totalSecond {
                 handleStop()
             } else {
                 checkIfInnerTimerCompleted()
@@ -147,7 +88,7 @@ class TimerController: UIViewController {
     
     private func checkIfInnerTimerCompleted() {
         if timerMode == .all {
-            if Int(timerCounter) == compoundSecondsArray[currentTimer]+1 {
+            if Int(timerCounter) > compoundSecondsArray[currentTimer] {
                 let sound = soundArray[Int(timer.innerTimerArray[currentTimer].soundInt)]
                 Player.shared.play(sound: sound)
                 currentTimer += 1
@@ -181,6 +122,93 @@ class TimerController: UIViewController {
             Player.shared.play(sound: sound)
         }
         navigationController?.popViewController(animated: false)
+    }
+    
+    //MARK: - Notification
+    
+    func getNotificationSound() -> UNNotificationSound? {
+        let timerSoundInt = Int(timer.innerTimerArray[currentTimer].soundInt)
+        switch timerSoundInt {
+        case 0:
+            return nil
+        case 1:
+            return UNNotificationSound.default
+        default:
+            let soundName = soundArray[timerSoundInt].id
+            return UNNotificationSound(named: UNNotificationSoundName(rawValue: "\(soundName).m4a"))
+        }
+    }
+    
+    func setNotification(remindSecond: CGFloat){
+        handleStop(.user)
+        if remindSecond > 0 {
+            
+            UDM.setValue(timerCounter, UDM.lastTimerCounter)
+            UDM.setValue(currentTimer, UDM.currentTimer)
+            UDM.setValue(Date(), UDM.currentNotificationDate)
+            UDM.setValue(timer.timerNumber, UDM.selectedTimerIndex)
+            self.notificationCenter.removeAllPendingNotificationRequests()
+            
+            if compoundSecondsArray.count == 1 {
+                let content = UNMutableNotificationContent()
+                content.title = "\(timer.timerNumber): Completed"
+                content.sound = getNotificationSound()
+                
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: remindSecond, repeats: false)
+                let id = UUID().uuidString
+                let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
+                
+                self.notificationCenter.add(request) { (error) in
+                    if(error != nil){
+                        print("Error " + error.debugDescription)
+                        return
+                    }
+                }
+            } else {
+                for i in currentTimer..<compoundSecondsArray.count {
+                    let newRemindSecond = CGFloat(compoundSecondsArray[i]) - ((timerCounter)-1)
+                    currentTimer = i //sound
+                    
+                    if newRemindSecond > 0 {
+                        let content = UNMutableNotificationContent()
+                        content.title = "\(timer.timerNumber+1).\(i+1): Completed"
+                        content.sound = getNotificationSound()
+                        
+                        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: newRemindSecond, repeats: false)
+                        let id = UUID().uuidString
+                        let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
+                        
+                        self.notificationCenter.add(request) { (error) in
+                            if(error != nil){
+                                print("Error " + error.debugDescription)
+                                return
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    //MARK: - UI
+    
+    private func configureViews() {
+        if timerMode == .all {
+            let innerTimerArray = timer.innerTimerArray
+            for i in 0..<innerTimerArray.count {
+                let newView = UIView()
+                newView.backgroundColor = UIColor(hex: "#\(colorArray[Int(innerTimerArray[i].colorInt)].hex)")
+                secondsArray.append(Int(innerTimerArray[i].seconds))
+                compoundSecondsArray.append(i)
+                viewArray.append(newView)
+            }
+            for i in 0..<secondsArray.count {
+                for j in 0...i {
+                    compoundSecondsArray[i] += secondsArray[j]
+                }
+                compoundSecondsArray[i] -= i
+            }
+        }
     }
     
     private func style(){
