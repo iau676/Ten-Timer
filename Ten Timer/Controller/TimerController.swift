@@ -34,6 +34,7 @@ class TimerController: UIViewController {
     
     var currentTimer: Int = UDM.getIntValue(UDM.currentTimer)
     var timerMode: TimerMode = .all
+    var customTitle: String = ""
     
     var viewArray: [UIView] = []
     var secondsArray: [Int] = []
@@ -52,14 +53,17 @@ class TimerController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.timeR = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
+            self.handleTimer()
+        })
+        
         configureNavigationBar()
         configureViews()
         style()
         layout()
         
-        self.timeR = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
-            self.handleTimer()
-        })
+        NotificationCenter.default.addObserver(self, selector: #selector(appMovedToBackground),
+                                               name: UIApplication.willResignActiveNotification, object: nil)
     }
     
     //MARK: - Selectors
@@ -68,21 +72,20 @@ class TimerController: UIViewController {
         handleStop(.user)
     }
     
+    @objc func appMovedToBackground() {
+        setNotification(remindSecond: totalSecond-(timerCounter-1))
+    }
+    
     //MARK: - Helpers
     
     private func handleTimer() {
         timerCounter += 1
-        
-        if UIApplication.shared.applicationState != .active {
-            setNotification(remindSecond: totalSecond-(timerCounter-1))
+        if timerCounter > totalSecond {
+            handleStop()
         } else {
-            if timerCounter > totalSecond {
-                handleStop()
-            } else {
-                checkIfInnerTimerCompleted()
-                handleAnimation()
-                stopButton.setTitle("\(Int(totalSecond-timerCounter+1))", for: .normal)
-            }
+            checkIfInnerTimerCompleted()
+            handleAnimation()
+            stopButton.setTitle("\(Int(totalSecond-timerCounter+1))", for: .normal)
         }
     }
     
@@ -156,7 +159,13 @@ class TimerController: UIViewController {
                     
                     if newRemindSecond > 0 {
                         let content = UNMutableNotificationContent()
-                        content.title = "\(timer.timerNumber+1).\(i+1): Completed"
+                        
+                        if secondsArray.count > 1 {
+                            content.title = "\(customTitle).\(i+1): Completed"
+                        } else {
+                            content.title = "\(customTitle): Completed"
+                        }
+                        
                         content.sound = getNotificationSound()
                         
                         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: newRemindSecond, repeats: false)
@@ -173,7 +182,7 @@ class TimerController: UIViewController {
                 }
             } else {
                 let content = UNMutableNotificationContent()
-                content.title = "\(timer.timerNumber): Completed"
+                content.title = "\(customTitle): Completed"
                 content.sound = getNotificationSound()
                 
                 let trigger = UNTimeIntervalNotificationTrigger(timeInterval: remindSecond, repeats: false)
@@ -209,10 +218,11 @@ class TimerController: UIViewController {
                 compoundSecondsArray[i] -= i
             }
         }
+        
         if currentTimer > 0 && timerMode == .all {
-            for i in 0...currentTimer {
-                DispatchQueue.main.async {
-                    self.viewArray[i].setHeightWithAnimation(self.view.bounds.height, animateTime: 1.5)
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) {
+                for i in 0...self.currentTimer {
+                        self.viewArray[i].setHeightWithAnimation(self.view.bounds.height, animateTime: 1.5)
                 }
             }
         }
@@ -264,7 +274,8 @@ class TimerController: UIViewController {
     }
     
     private func configureNavigationBar() {
-        title = timerMode == .all ? "\(timer.timerNumber+1)" : "\(timer.timerNumber+1).\(timer.innerTimerArray[currentTimer].timerNumber+1)"
+        customTitle = timerMode == .all ? "\(timer.timerNumber+1)" : "\(timer.timerNumber+1).\(timer.innerTimerArray[currentTimer].timerNumber+1)"
+        title = customTitle
         navigationItem.leftBarButtonItem = UIBarButtonItem()
         
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
