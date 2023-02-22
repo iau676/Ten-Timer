@@ -25,7 +25,17 @@ struct TimerViewModel {
     }
     
     var title: String {
-        return timer.title ?? ""
+        return timer.innerTimerArray[0].title ?? ""
+    }
+    
+    var soundName: String {
+        return soundArray[Int(timer.innerTimerArray[0].soundInt)].name
+    }
+    
+    var subtitle: String {
+        let innerTimerCount = timer.innerTimerArray.count
+        let subtitle = innerTimerCount > 1 ? "\(innerTimerCount) timers" : "\(soundName)"
+        return subtitle
     }
     
     init(timer: TTimer) {

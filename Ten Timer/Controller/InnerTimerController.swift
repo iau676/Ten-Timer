@@ -88,6 +88,7 @@ class InnerTimerController: UIViewController {
     
     func configureNavigationBar() {
         title = "\(timer.timerNumber+1)"
+        navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
         
         let addBarButton = UIBarButtonItem(barButtonSystemItem: .add,
                                            target: self,

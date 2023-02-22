@@ -166,12 +166,7 @@ class SettingsController: UIViewController {
     
     private func configureNavigationBar() {
         title = "\(timer.timerNumber+1).\(index+1)"
-        navigationController?.navigationBar.topItem?.backButtonTitle = "Timers"
-        
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.tintColor = .label
+        navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
         
         let deleteBarButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteBarButtonPressed))
         

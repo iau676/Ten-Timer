@@ -55,6 +55,14 @@ class TimerCell: UICollectionViewCell {
         return label
     }()
     
+    var subtitleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont(name: Fonts.AvenirNextRegular, size: 13)
+        label.textColor = .white
+        return label
+    }()
+    
     //MARK: - Lifecycle
     
     override init(frame: CGRect) {
@@ -78,6 +86,10 @@ class TimerCell: UICollectionViewCell {
         contentView.addSubview(titleLabel)
         titleLabel.anchor(left: leftAnchor, bottom: bottomAnchor,
                           paddingLeft: 16, paddingBottom: 18)
+        
+        contentView.addSubview(subtitleLabel)
+        subtitleLabel.anchor(left: leftAnchor, bottom: bottomAnchor,
+                          paddingLeft: 16, paddingBottom: 4)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -106,5 +118,6 @@ class TimerCell: UICollectionViewCell {
                                                  color: viewModel.color)
         
         titleLabel.text = viewModel.title
+        subtitleLabel.text = viewModel.subtitle
     }
 }
