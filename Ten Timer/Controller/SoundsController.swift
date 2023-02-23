@@ -23,10 +23,9 @@ class SoundsController: UIViewController {
     
     private let lineView = UIView()
     private let dismissButton = UIButton()
-    
+    private let soundGuideButton = makeButton(withText: "Sound Guide")
     private let vibrateLabel = makePaddingLabel(withText: "Vibrate")
     private let vibrateSwitch = makeSwitch(isOn: true)
-    
     private let tableView = UITableView()
     
     //MARK: - Lifecycle
@@ -65,6 +64,10 @@ class SoundsController: UIViewController {
         dismiss(animated: true)
     }
     
+    @objc private func soundGuidePressed() {
+        showSoundGuideAlert()
+    }
+    
     //MARK: - Helpers
     
     private func configureSelectedSound() {
@@ -80,6 +83,8 @@ class SoundsController: UIViewController {
     }
     
     private func style(){
+        view.backgroundColor = .systemGroupedBackground
+        
         lineView.backgroundColor = .darkGray
         lineView.setDimensions(height: 6, width: 50)
         lineView.layer.cornerRadius = 3
@@ -87,9 +92,11 @@ class SoundsController: UIViewController {
         dismissButton.backgroundColor = .clear
         dismissButton.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
         
+        soundGuideButton.addTarget(self, action: #selector(soundGuidePressed), for: .touchUpInside)
+        
         vibrateLabel.backgroundColor = .systemGray4
         vibrateLabel.layer.masksToBounds = true
-        vibrateLabel.layer.cornerRadius = 10
+        vibrateLabel.setViewCornerRadius(10)
         
         vibrateSwitch.isOn = UDM.getBoolValue(UDM.isVibrate)
         vibrateSwitch.addTarget(self, action: #selector(vibrateChanged), for: .valueChanged)
@@ -103,29 +110,39 @@ class SoundsController: UIViewController {
     }
     
     private func layout(){
-        view.backgroundColor = .systemGroupedBackground
-        
         view.addSubview(lineView)
         lineView.centerX(inView: view)
         lineView.anchor(top: view.topAnchor, paddingTop: 16)
         
-        view.addSubview(vibrateLabel)
-        vibrateLabel.anchor(top: lineView.bottomAnchor, left: view.leftAnchor,
-                            right: view.rightAnchor, paddingTop: 16, paddingLeft: 16, paddingRight: 16)
+        let stack = UIStackView(arrangedSubviews: [soundGuideButton, vibrateLabel, tableView])
+        stack.spacing = 16
+        stack.axis = .vertical
+        
+        view.addSubview(stack)
+        stack.anchor(top: lineView.bottomAnchor, left: view.leftAnchor,
+                     bottom: view.bottomAnchor, right: view.rightAnchor,
+                     paddingTop: 16, paddingLeft: 16, paddingBottom: 16, paddingRight: 16)
+        
+        soundGuideButton.setHeight(height: 50)
         vibrateLabel.setHeight(height: 50)
         
-        view.addSubview(vibrateSwitch)
-        vibrateSwitch.anchor(right: vibrateLabel.rightAnchor, paddingRight: 16)
+        vibrateLabel.addSubview(vibrateSwitch)
         vibrateSwitch.centerY(inView: vibrateLabel)
-        
-        view.addSubview(tableView)
-        tableView.anchor(top: vibrateLabel.bottomAnchor, left: view.leftAnchor,
-                         bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor,
-                         paddingTop: 16, paddingLeft: 16, paddingBottom: 16, paddingRight: 16)
+        vibrateSwitch.anchor(right: vibrateLabel.rightAnchor, paddingRight: 16)
         
         view.addSubview(dismissButton)
         dismissButton.anchor(top: view.topAnchor, left: view.leftAnchor,
-                             bottom: vibrateLabel.topAnchor, right: view.rightAnchor)
+                             bottom: stack.topAnchor, right: view.rightAnchor)
+    }
+    
+    private func showSoundGuideAlert() {
+        let alert = UIAlertController(title: "", message: "Ten Timer is not an alarm app. When Ten Timer is in the background, you will receive iOS notifications as usual. If your device is in silent mode, you cannot hear sounds due to iOS limits on third-party apps.", preferredStyle: .alert)
+       
+        let actionOK = UIAlertAction(title: "OK", style: .default) { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }
+        alert.addAction(actionOK)
+        self.present(alert, animated: true, completion: nil)
     }
 }
 

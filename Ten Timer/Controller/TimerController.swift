@@ -135,7 +135,7 @@ class TimerController: UIViewController {
     private func showStopAlert() {
         let alert = UIAlertController(title: "Are you sure you want to stop timer?", message: "", preferredStyle: .alert)
         let actionStop = UIAlertAction(title: "Stop", style: .destructive) { (action) in
-            self.navigationController?.popToRootViewController(animated: true)
+            self.navigationController?.popViewController(animated: true)
         }
         let actionContinue = UIAlertAction(title: "Continue", style: UIAlertAction.Style.cancel) { (action) in
             self.startTimer()
@@ -162,9 +162,8 @@ class TimerController: UIViewController {
     }
     
     func setNotification(remindSecond: CGFloat){
-        handleStop(.user)
+        timeR.invalidate()
         if remindSecond > 0 {
-            
             UDM.setValue(timerCounter, UDM.lastTimerCounter)
             UDM.setValue(currentTimer, UDM.currentTimer)
             UDM.setValue(Date(), UDM.currentNotificationDate)

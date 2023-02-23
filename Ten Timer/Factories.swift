@@ -32,7 +32,7 @@ func makePaddingLabel(withText text: String) -> UILabel {
 
 
 class UILabelPadding: UILabel {
-    let padding = UIEdgeInsets(top: 2, left: 8, bottom: 2, right: 8)
+    let padding = UIEdgeInsets(top: 2, left: 16, bottom: 2, right: 8)
     override func drawText(in rect: CGRect) {
         super.drawText(in: rect.inset(by: padding))
     }

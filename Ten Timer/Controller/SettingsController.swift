@@ -33,9 +33,6 @@ class SettingsController: UIViewController {
     private let soundLabel = makeLabel(withText: "Sound")
     private lazy var soundButton = makeButton(withText: "\(soundArray[Int(timer.innerTimerArray[index].soundInt)].name)")
     
-    private lazy var otherSettingsButton = UIButton()
-    private lazy var removeButton = UIButton()
-    
     private var hour = 0
     private var minute = 0
     private var second = 0
@@ -79,20 +76,7 @@ class SettingsController: UIViewController {
     
     @objc private func deleteBarButtonPressed() {
         titleTextField.endEditing(true)
-        
-        let alert = UIAlertController(title: nil, message: "Are you sure you want to delete?",
-                                      preferredStyle: .actionSheet)
-        
-        alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
-            self.dismiss(animated: true) {
-                TT.shared.removeInnerTimer(timer: self.timer, index: self.index)
-                self.navigationController?.popViewController(animated: true)
-            }
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        
-        present(alert, animated: true)
+        showDeleteAlert()
     }
     
     //MARK: - Helpers
@@ -120,12 +104,6 @@ class SettingsController: UIViewController {
         soundButton.addTarget(self, action: #selector(soundButtonPressed), for: .touchUpInside)
         soundButton.contentHorizontalAlignment = .right
         soundButton.setTitleColor(.darkGray, for: .normal)
-        
-        otherSettingsButton.setTitle("Other Settings", for: .normal)
-        otherSettingsButton.backgroundColor = .systemGray4
-        otherSettingsButton.layer.cornerRadius = 10
-        otherSettingsButton.setTitleColor(.label, for: .normal)
-        otherSettingsButton.setImageWithRenderingMode(image: UIImage(named: "next"), width: 15, height: 15, color: .darkGray)
     }
     
     private func layout(){
@@ -138,7 +116,7 @@ class SettingsController: UIViewController {
         lineView.anchor(top: scrollView.topAnchor, left: view.leftAnchor, right: view.rightAnchor)
         
         let stack = UIStackView(arrangedSubviews: [titleTextField, pickerView,
-                                                   colorButton, soundButton, otherSettingsButton])
+                                                   colorButton, soundButton])
         stack.axis = .vertical
         stack.spacing = 8
         
@@ -158,8 +136,21 @@ class SettingsController: UIViewController {
         titleTextField.setHeight(height: 50)
         colorButton.setHeight(height: 50)
         soundButton.setHeight(height: 50)
-        otherSettingsButton.setHeight(height: 50)
-        otherSettingsButton.moveImageRight()
+    }
+    
+    private func showDeleteAlert() {
+        let alert = UIAlertController(title: nil, message: "Are you sure you want to delete?",
+                                      preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
+            self.dismiss(animated: true) {
+                TT.shared.removeInnerTimer(timer: self.timer, index: self.index)
+                self.navigationController?.popViewController(animated: true)
+            }
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(alert, animated: true)
     }
     
     private func configureNavigationBar() {
