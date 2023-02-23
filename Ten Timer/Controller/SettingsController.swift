@@ -78,6 +78,8 @@ class SettingsController: UIViewController {
     }
     
     @objc private func deleteBarButtonPressed() {
+        titleTextField.endEditing(true)
+        
         let alert = UIAlertController(title: nil, message: "Are you sure you want to delete?",
                                       preferredStyle: .actionSheet)
         
