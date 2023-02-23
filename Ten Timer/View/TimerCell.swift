@@ -84,8 +84,8 @@ class TimerCell: UICollectionViewCell {
                               paddingTop: 12, paddingLeft: 12)
         
         contentView.addSubview(titleLabel)
-        titleLabel.anchor(left: leftAnchor, bottom: bottomAnchor,
-                          paddingLeft: 16, paddingBottom: 18)
+        titleLabel.anchor(left: leftAnchor, bottom: bottomAnchor, right: rightAnchor,
+                          paddingLeft: 16, paddingBottom: 18, paddingRight: 16)
         
         contentView.addSubview(subtitleLabel)
         subtitleLabel.anchor(left: leftAnchor, bottom: bottomAnchor,

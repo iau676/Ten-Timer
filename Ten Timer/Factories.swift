@@ -50,7 +50,7 @@ func makeButton(withText text: String, backgroundColor: UIColor = .systemGray4) 
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setTitle(text, for: .normal)
     button.titleLabel?.adjustsFontSizeToFitWidth = true
-    button.contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 16)
+    button.contentEdgeInsets = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
     button.backgroundColor = backgroundColor
     button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
     button.setTitleColor(.label, for: .normal)

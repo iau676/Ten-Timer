@@ -79,8 +79,8 @@ class InnerTimerCell: UICollectionViewCell {
         timeLabel.centerX(inView: self)
       
         contentView.addSubview(titleLabel)
-        titleLabel.anchor(left: leftAnchor, bottom: bottomAnchor,
-                          paddingLeft: 16, paddingBottom: 18)
+        titleLabel.anchor(left: leftAnchor, bottom: bottomAnchor, right: rightAnchor,
+                          paddingLeft: 16, paddingBottom: 18, paddingRight: 16)
         
         contentView.addSubview(soundLabel)
         soundLabel.anchor(left: leftAnchor, bottom: bottomAnchor,

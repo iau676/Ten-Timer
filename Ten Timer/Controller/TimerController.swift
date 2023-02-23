@@ -27,6 +27,8 @@ class TimerController: UIViewController {
     
     private let stopButton = UIButton()
     private let timerView = UIView()
+    private let timerTitleLabel = UILabel()
+    
     private var timeR = Timer()
     private var timerCounter: CGFloat = UDM.getCGFloatValue(UDM.currentTimerCounter)+1
     private var totalSecond: CGFloat = 0
@@ -34,7 +36,7 @@ class TimerController: UIViewController {
     
     var currentTimer: Int = UDM.getIntValue(UDM.currentTimer)
     var timerMode: TimerMode = .all
-    var customTitle: String = ""
+    var titleForNotification: String = ""
     
     var viewArray: [UIView] = []
     var secondsArray: [Int] = []
@@ -100,6 +102,7 @@ class TimerController: UIViewController {
                 let sound = soundArray[Int(timer.innerTimerArray[currentTimer].soundInt)]
                 Player.shared.play(sound: sound)
                 currentTimer += 1
+                updateTitles()
             }
         }
     }
@@ -193,9 +196,9 @@ class TimerController: UIViewController {
                         let content = UNMutableNotificationContent()
                         
                         if secondsArray.count > 1 {
-                            content.title = "\(customTitle).\(i+1): Completed"
+                            content.title = "\(titleForNotification).\(i+1): Completed"
                         } else {
-                            content.title = "\(customTitle): Completed"
+                            content.title = "\(titleForNotification): Completed"
                         }
                         
                         content.sound = getNotificationSound()
@@ -214,7 +217,7 @@ class TimerController: UIViewController {
                 }
             } else {
                 let content = UNMutableNotificationContent()
-                content.title = "\(customTitle): Completed"
+                content.title = "\(titleForNotification): Completed"
                 content.sound = getNotificationSound()
                 
                 let trigger = UNTimeIntervalNotificationTrigger(timeInterval: remindSecond, repeats: false)
@@ -263,14 +266,15 @@ class TimerController: UIViewController {
     private func style(){
         view.backgroundColor = .systemGroupedBackground
         
-        if timerMode == .all {
-            totalSecond = CGFloat(timer.totalSeconds)
-        } else {
-            totalSecond = CGFloat(timer.innerTimerArray[currentTimer].seconds)
-        }
-        
+        totalSecond = timerMode == .all ?
+        CGFloat(timer.totalSeconds) :
+        CGFloat(timer.innerTimerArray[currentTimer].seconds)
+     
         let hex = colorArray[Int(timer.innerTimerArray[currentTimer].colorInt)].hex
         timerView.backgroundColor = UIColor(hex: "#\(hex)")
+        
+        timerTitleLabel.numberOfLines = 0
+        timerTitleLabel.textAlignment = .center
         
         stopButton.setTitle("\(Int(totalSecond))", for: .normal)
         stopButton.titleLabel?.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 23)
@@ -300,18 +304,36 @@ class TimerController: UIViewController {
             }
        }
         
+        view.addSubview(timerTitleLabel)
+        timerTitleLabel.centerX(inView: view)
+        timerTitleLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                               right: view.rightAnchor, paddingLeft: 16, paddingRight: 16)
+        
         view.addSubview(stopButton)
         stopButton.centerY(inView: view)
         stopButton.centerX(inView: view)
     }
     
     private func configureNavigationBar() {
-        customTitle = timerMode == .all ? "\(timer.timerNumber+1)" : "\(timer.timerNumber+1).\(timer.innerTimerArray[currentTimer].timerNumber+1)"
-        title = customTitle
+        updateTitles()
         navigationItem.leftBarButtonItem = UIBarButtonItem()
         
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
+    }
+    
+    private func updateTitles() {
+        let currentInnerTimer = timer.innerTimerArray[currentTimer]
+        if timerMode == .single {
+            titleForNotification = "\(timer.timerNumber+1).\(currentInnerTimer.timerNumber+1)"
+            title = titleForNotification
+        } else {
+            titleForNotification = "\(timer.timerNumber+1)"
+            title = secondsArray.count > 1 ?
+            "\(timer.timerNumber+1).\(currentInnerTimer.timerNumber+1)" :
+            "\(timer.timerNumber+1)"
+        }
+        timerTitleLabel.text = currentInnerTimer.title
     }
 }
