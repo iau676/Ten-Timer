@@ -17,7 +17,12 @@ class SoundCell: UITableViewCell {
     
     private let secondsLabel = makeLabel(withText: "", size: 15, color: .darkGray)
     private let nameLabel = makeLabel(withText: "")
-    private let checkLabel = makeLabel(withText: "", color: .blue)
+    private let checkLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name: Fonts.AvenirNextBold, size: 25)
+        label.textColor = .label
+        return label
+    }()
     
     //MARK: - Lifecycle
     

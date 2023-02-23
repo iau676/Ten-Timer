@@ -69,7 +69,7 @@ class SoundsController: UIViewController {
     
     private func configureSelectedSound() {
         resetCheckmark()
-        soundArray[Int(innerTimer.colorInt)].selected = true
+        soundArray[Int(innerTimer.soundInt)].selected = true
         tableView.reloadData()
     }
     
