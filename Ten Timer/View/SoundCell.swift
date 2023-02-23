@@ -50,5 +50,6 @@ class SoundCell: UITableViewCell {
         nameLabel.text = sound.name
         secondsLabel.text = "0:\(sound.seconds) ・"
         checkLabel.text = "\(sound.selected ? "✓" : "")"
+        backgroundColor = .systemGray4
     }
 }

@@ -22,6 +22,7 @@ class SoundsController: UIViewController {
     weak var delegate: SoundsControllerDelegate?
     
     private let lineView = UIView()
+    private let dismissButton = UIButton()
     
     private let vibrateLabel = makePaddingLabel(withText: "Vibrate")
     private let vibrateSwitch = makeSwitch(isOn: true)
@@ -60,6 +61,10 @@ class SoundsController: UIViewController {
         UDM.setValue(sender.isOn, UDM.isVibrate)
     }
     
+    @objc private func dismissView() {
+        dismiss(animated: true)
+    }
+    
     //MARK: - Helpers
     
     private func configureSelectedSound() {
@@ -79,7 +84,10 @@ class SoundsController: UIViewController {
         lineView.setDimensions(height: 6, width: 50)
         lineView.layer.cornerRadius = 3
         
-        vibrateLabel.backgroundColor = .systemBackground
+        dismissButton.backgroundColor = .clear
+        dismissButton.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
+        
+        vibrateLabel.backgroundColor = .systemGray4
         vibrateLabel.layer.masksToBounds = true
         vibrateLabel.layer.cornerRadius = 10
         
@@ -111,7 +119,13 @@ class SoundsController: UIViewController {
         vibrateSwitch.centerY(inView: vibrateLabel)
         
         view.addSubview(tableView)
-        tableView.anchor(top: vibrateLabel.bottomAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor,              right: view.rightAnchor, paddingTop: 16, paddingLeft: 16, paddingBottom: 16, paddingRight: 16)
+        tableView.anchor(top: vibrateLabel.bottomAnchor, left: view.leftAnchor,
+                         bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor,
+                         paddingTop: 16, paddingLeft: 16, paddingBottom: 16, paddingRight: 16)
+        
+        view.addSubview(dismissButton)
+        dismissButton.anchor(top: view.topAnchor, left: view.leftAnchor,
+                             bottom: vibrateLabel.topAnchor, right: view.rightAnchor)
     }
 }
 

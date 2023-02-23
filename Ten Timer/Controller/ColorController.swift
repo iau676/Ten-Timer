@@ -21,6 +21,7 @@ class ColorController: UIViewController {
     weak var delegate: ColorControllerDelegate?
     
     private let lineView = UIView()
+    private let dismissButton = UIButton()
     
     fileprivate lazy var colorCV: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -53,6 +54,12 @@ class ColorController: UIViewController {
         configureSelectedColor()
     }
     
+    //MARK: - Selectors
+    
+    @objc private func dismissView() {
+        dismiss(animated: true)
+    }
+    
     //MARK: - Helpers
     
     private func configureSelectedColor() {
@@ -71,6 +78,9 @@ class ColorController: UIViewController {
         lineView.backgroundColor = .darkGray
         lineView.setDimensions(height: 6, width: 50)
         lineView.layer.cornerRadius = 3
+        
+        dismissButton.backgroundColor = .clear
+        dismissButton.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
     }
     
     private func layout(){
@@ -83,6 +93,10 @@ class ColorController: UIViewController {
         view.addSubview(colorCV)
         colorCV.anchor(top: lineView.bottomAnchor, left: view.leftAnchor,
                        bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 16)
+        
+        view.addSubview(dismissButton)
+        dismissButton.anchor(top: view.topAnchor, left: view.leftAnchor,
+                             bottom: colorCV.topAnchor, right: view.rightAnchor)
     }
 }
 
