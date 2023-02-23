@@ -53,10 +53,7 @@ class TimerController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.timeR = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
-            self.handleTimer()
-        })
-        
+        startTimer()
         configureNavigationBar()
         configureViews()
         style()
@@ -77,6 +74,12 @@ class TimerController: UIViewController {
     }
     
     //MARK: - Helpers
+    
+    private func startTimer() {
+        self.timeR = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
+            self.handleTimer()
+        })
+    }
     
     private func handleTimer() {
         timerCounter += 1
@@ -123,8 +126,24 @@ class TimerController: UIViewController {
             
             let sound = soundArray[Int(timer.innerTimerArray[currentTimer].soundInt)]
             Player.shared.play(sound: sound)
+            self.navigationController?.popToRootViewController(animated: false)
+        } else {
+            showStopAlert()
         }
-        navigationController?.popToRootViewController(animated: false)
+    }
+    
+    private func showStopAlert() {
+        let alert = UIAlertController(title: "Are you sure you want to stop timer?", message: "", preferredStyle: .alert)
+        let actionStop = UIAlertAction(title: "Stop", style: .destructive) { (action) in
+            self.navigationController?.popToRootViewController(animated: true)
+        }
+        let actionContinue = UIAlertAction(title: "Continue", style: UIAlertAction.Style.cancel) { (action) in
+            self.startTimer()
+            alert.dismiss(animated: true, completion: nil)
+        }
+        alert.addAction(actionStop)
+        alert.addAction(actionContinue)
+        self.present(alert, animated: true, completion: nil)
     }
     
     //MARK: - Notification
