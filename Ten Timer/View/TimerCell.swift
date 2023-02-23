@@ -117,7 +117,18 @@ class TimerCell: UICollectionViewCell {
                                                  width: 15, height: 15,
                                                  color: viewModel.color)
         
-        titleLabel.text = viewModel.title
+        titleLabel.text = showTitle() ? viewModel.title : ""
         subtitleLabel.text = viewModel.subtitle
+    }
+    
+    private func showTitle() -> Bool {
+        let width = self.frame.width
+        let height = self.frame.height
+        
+        if width > 5*height {
+            return false
+        } else {
+            return true
+        }
     }
 }

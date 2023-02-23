@@ -111,13 +111,24 @@ class InnerTimerCell: UICollectionViewCell {
         guard let innerTimer = innerTimer else { return }
         let viewModel = InnerTimerViewModel(innerTimer: innerTimer)
 
-        titleLabel.text = "\(viewModel.title)"
-        timeLabel.text = "\(viewModel.totalSecondsStr)"
-        soundLabel.text = "\(viewModel.soundName)"
+        titleLabel.text = showTitle() ? viewModel.title : ""
+        timeLabel.text = viewModel.totalSecondsStr
+        soundLabel.text = viewModel.soundName
         contentView.backgroundColor = viewModel.color
         
         settingsButton.setImageWithRenderingMode(image: UIImage(named: "dots"),
                                                  width: 15, height: 15,
                                                  color: viewModel.color)
+    }
+    
+    private func showTitle() -> Bool {
+        let width = self.frame.width
+        let height = self.frame.height
+        
+        if width > 5*height {
+            return false
+        } else {
+            return true
+        }
     }
 }

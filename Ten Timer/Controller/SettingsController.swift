@@ -20,6 +20,8 @@ class SettingsController: UIViewController {
     
     weak var delegate: SettingsControllerDelegate?
     
+    private let scrollView = UIScrollView()
+    
     private let lineView = UIView()
     
     private let titleTextField = UITextField()
@@ -125,41 +127,35 @@ class SettingsController: UIViewController {
     }
     
     private func layout(){
+        view.addSubview(scrollView)
+        scrollView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                          bottom: view.bottomAnchor, right: view.rightAnchor)
         
-        view.addSubview(lineView)
+        scrollView.addSubview(lineView)
         lineView.setHeight(height: 1)
-        lineView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, right: view.rightAnchor)
+        lineView.anchor(top: scrollView.topAnchor, left: view.leftAnchor, right: view.rightAnchor)
         
-        view.addSubview(titleTextField)
-        titleTextField.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, right: view.rightAnchor)
-        titleTextField.setHeight(height: 50)
+        let stack = UIStackView(arrangedSubviews: [titleTextField, pickerView,
+                                                   colorButton, soundButton, otherSettingsButton])
+        stack.axis = .vertical
+        stack.spacing = 8
         
-        view.addSubview(pickerView)
-        pickerView.centerX(inView: view)
-        pickerView.anchor(top: titleTextField.bottomAnchor, left: view.leftAnchor,
-                          right: view.rightAnchor, paddingLeft: 16, paddingRight: 16)
-        
-        view.addSubview(colorButton)
-        colorButton.anchor(top: pickerView.bottomAnchor, left: view.leftAnchor,
-                           right: view.rightAnchor, paddingTop: 8, paddingLeft: 16, paddingRight: 16)
-        colorButton.setHeight(height: 50)
+        scrollView.addSubview(stack)
+        stack.anchor(top: scrollView.topAnchor, bottom: scrollView.bottomAnchor)
+        stack.centerX(inView: scrollView)
+        stack.setWidth(width: view.bounds.width-32)
 
-        view.addSubview(colorLabel)
+        colorButton.addSubview(colorLabel)
         colorLabel.centerY(inView: colorButton)
         colorLabel.anchor(left: colorButton.leftAnchor, paddingLeft: 16)
 
-        view.addSubview(soundButton)
-        soundButton.anchor(top: colorButton.bottomAnchor, left: view.leftAnchor,
-                           right: view.rightAnchor, paddingTop: 8, paddingLeft: 16, paddingRight: 16)
-        soundButton.setHeight(height: 50)
-
-        view.addSubview(soundLabel)
+        soundButton.addSubview(soundLabel)
         soundLabel.centerY(inView: soundButton)
         soundLabel.anchor(left: soundButton.leftAnchor, paddingLeft: 16)
         
-        view.addSubview(otherSettingsButton)
-        otherSettingsButton.anchor(top: soundButton.bottomAnchor, left: view.leftAnchor,
-                                   right: view.rightAnchor, paddingTop: 8, paddingLeft: 16, paddingRight: 16)
+        titleTextField.setHeight(height: 50)
+        colorButton.setHeight(height: 50)
+        soundButton.setHeight(height: 50)
         otherSettingsButton.setHeight(height: 50)
         otherSettingsButton.moveImageRight()
     }
