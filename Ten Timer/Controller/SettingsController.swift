@@ -7,18 +7,12 @@
 
 import UIKit
 
-protocol SettingsControllerDelegate: AnyObject {
-    func reloadData()
-}
-
 class SettingsController: UIViewController {
     
     //MARK: - Properties
     
     private let timer: TTimer
     private let index: Int
-    
-    weak var delegate: SettingsControllerDelegate?
     
     private let scrollView = UIScrollView()
     
@@ -56,6 +50,11 @@ class SettingsController: UIViewController {
         style()
         layout()
         configurePickerView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
     }
     
     //MARK: - Selectors
@@ -193,7 +192,6 @@ extension SettingsController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         guard let text = textField.text else { return }
         TT.shared.updateInnerTimerTitle(timer: timer, index: index, newTitle: text)
-        delegate?.reloadData()
     }
 }
 
@@ -237,7 +235,6 @@ extension SettingsController: UIPickerViewDataSource, UIPickerViewDelegate {
         checkZero()
         let newTotalSeconds = (hour*3600) + (minute*60) + second
         TT.shared.updateInnerTimerSeconds(timer: timer, index: index, seconds: newTotalSeconds)
-        delegate?.reloadData()
     }
 }
 

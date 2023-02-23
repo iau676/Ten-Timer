@@ -84,6 +84,8 @@ class TimerController: UIViewController {
     private func handleTimer() {
         timerCounter += 1
         if timerCounter > totalSecond {
+            stopButton.isHidden = true
+            showCompletedAlert()
             handleStop()
         } else {
             checkIfInnerTimerCompleted()
@@ -126,7 +128,6 @@ class TimerController: UIViewController {
             
             let sound = soundArray[Int(timer.innerTimerArray[currentTimer].soundInt)]
             Player.shared.play(sound: sound)
-            self.navigationController?.popToRootViewController(animated: false)
         } else {
             showStopAlert()
         }
@@ -143,6 +144,18 @@ class TimerController: UIViewController {
         }
         alert.addAction(actionStop)
         alert.addAction(actionContinue)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func showCompletedAlert() {
+        let alert = UIAlertController(title: "Timer Completed", message: "", preferredStyle: .alert)
+       
+        let actionOK = UIAlertAction(title: "OK", style: .default) { (action) in
+            Player.shared.stopSound()
+            self.navigationController?.popViewController(animated: false)
+            alert.dismiss(animated: false, completion: nil)
+        }
+        alert.addAction(actionOK)
         self.present(alert, animated: true, completion: nil)
     }
     
@@ -163,6 +176,7 @@ class TimerController: UIViewController {
     
     func setNotification(remindSecond: CGFloat){
         timeR.invalidate()
+        self.navigationController?.popToRootViewController(animated: false)
         if remindSecond > 0 {
             UDM.setValue(timerCounter, UDM.lastTimerCounter)
             UDM.setValue(currentTimer, UDM.currentTimer)

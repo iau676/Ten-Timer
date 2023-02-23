@@ -185,11 +185,3 @@ extension HomeController: TimerCellDelegate {
         navigationController?.pushViewController(controller, animated: true)
     }
 }
-
-//MARK: - SettingsControllerDelegate
-
-extension HomeController: SettingsControllerDelegate {
-    func reloadData() {
-        self.timerCV.reloadData()
-    }
-}
