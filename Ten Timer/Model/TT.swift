@@ -39,7 +39,6 @@ struct TT {
     
     mutating func addInnerTimer(timer: TTimer) {
         let timerNumber = Int(timer.timerNumber)
-        let innerTimerArrayCount = Int(timer.innerTimerArray.count)
         
         let newInnerTimer = InnerTimer(context: self.context)
         newInnerTimer.date = Date()
@@ -146,8 +145,8 @@ struct TT {
         let min = (second - (hour*3600)) / 60
         let sec = second - ((hour*3600)+(min*60))
         
-        let hourStr = "\(hour)' "
-        let minStr = "\(min)\" "
+        let hourStr = "\(hour)'"
+        let minStr = "\(min)\""
         let secStr = "\(sec)"
         
         return "\(hour > 0 ? hourStr : "")\(min > 0 ? minStr : "")\(sec > 0 ? secStr : "")"

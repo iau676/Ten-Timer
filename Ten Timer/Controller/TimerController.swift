@@ -92,7 +92,9 @@ class TimerController: UIViewController {
         } else {
             checkIfInnerTimerCompleted()
             handleAnimation()
-            stopButton.setTitle("\(Int(totalSecond-timerCounter+1))", for: .normal)
+            let second = Int(totalSecond-timerCounter+1)
+            let secondStr = TT.shared.getTimeString(second)
+            stopButton.setTitle("\(secondStr)", for: .normal)
         }
     }
     
@@ -279,7 +281,10 @@ class TimerController: UIViewController {
         timerTitleLabel.numberOfLines = 0
         timerTitleLabel.textAlignment = .center
         
-        stopButton.setTitle("\(Int(totalSecond))", for: .normal)
+        stopButton.titleLabel?.numberOfLines = 1
+        stopButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        stopButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
+        stopButton.setTitle("\(TT.shared.getTimeString(Int(totalSecond)))", for: .normal)
         stopButton.titleLabel?.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 23)
         stopButton.backgroundColor = .systemRed
         stopButton.setTitleColor(.white, for: .normal)
