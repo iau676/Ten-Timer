@@ -21,7 +21,7 @@ class TimerCell: UICollectionViewCell {
     
     weak var delegate: TimerCellDelegate?
     
-    lazy var timeLabel: UILabel = {
+    private lazy var timeLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 25)
@@ -29,7 +29,7 @@ class TimerCell: UICollectionViewCell {
         return label
     }()
     
-    lazy var numberButton: UIButton = {
+    private lazy var numberButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 19)
@@ -38,16 +38,23 @@ class TimerCell: UICollectionViewCell {
         return button
     }()
     
-    lazy var settingsButton: UIButton = {
+    private lazy var settingsButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = Colors.f6f6f6
         button.setDimensions(height: 26, width: 26)
         button.layer.cornerRadius = 26 / 2
+        return button
+    }()
+    
+    private lazy var hiddenButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .clear
+        button.setDimensions(height: 50, width: 50)
         button.addTarget(self, action: #selector(settingsPressed), for: .touchUpInside)
         return button
     }()
     
-    var titleLabel: UILabel = {
+    private var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: Fonts.AvenirNextDemiBold, size: 15)
@@ -55,7 +62,7 @@ class TimerCell: UICollectionViewCell {
         return label
     }()
     
-    var subtitleLabel: UILabel = {
+    private var subtitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: Fonts.AvenirNextRegular, size: 13)
@@ -79,6 +86,9 @@ class TimerCell: UICollectionViewCell {
         settingsButton.anchor(top: topAnchor, right: rightAnchor,
                               paddingTop: 12, paddingRight: 12)
         
+        contentView.addSubview(hiddenButton)
+        hiddenButton.anchor(top: topAnchor, right: rightAnchor)
+        
         contentView.addSubview(numberButton)
         numberButton.anchor(top: topAnchor, left: leftAnchor,
                               paddingTop: 12, paddingLeft: 12)
@@ -98,14 +108,14 @@ class TimerCell: UICollectionViewCell {
     
     //MARK: - Selectors
     
-    @objc func settingsPressed() {
+    @objc private func settingsPressed() {
         guard let timer = timer else { return }
         delegate?.settingsPressed(timer)
     }
     
     //MARK: - Helpers
     
-    func configure() {
+    private func configure() {
         guard let timer = timer else { return }
         let viewModel = TimerViewModel(timer: timer)
         

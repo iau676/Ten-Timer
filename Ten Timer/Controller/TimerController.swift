@@ -259,14 +259,6 @@ class TimerController: UIViewController {
             }
         }
         
-        if currentTimer > 0 && timerMode == .all {
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) {
-                for i in 0...self.currentTimer {
-                        self.viewArray[i].setHeightWithAnimation(self.view.bounds.height, animateTime: 1.5)
-                }
-            }
-        }
-        
         //update current timer for relaunch
          for i in 0..<compoundSecondsArray.count {
              if Int(timerCounter) > compoundSecondsArray[i] {
@@ -274,6 +266,13 @@ class TimerController: UIViewController {
              }
          }
         
+        if currentTimer > 0 && timerMode == .all {
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) {
+                for i in 0...self.currentTimer {
+                        self.viewArray[i].setHeightWithAnimation(self.view.bounds.height, animateTime: 1.5)
+                }
+            }
+        }
     }
     
     private func style(){
