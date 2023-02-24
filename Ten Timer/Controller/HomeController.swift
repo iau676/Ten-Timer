@@ -78,7 +78,6 @@ class HomeController: UIViewController {
         if UDM.getStringValue(UDM.currentVersion) == nil {
             UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .sound, .alert]) { _, _ in }
             UDM.setValue("1.0", UDM.currentVersion)
-            UDM.setValue(true, UDM.isVibrate)
             for i in 0...9 {
                 TT.shared.appendItem(i)
             }

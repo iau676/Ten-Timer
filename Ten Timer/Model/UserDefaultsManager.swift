@@ -18,7 +18,6 @@ struct UserDefaultsManager {
     let currentTimer = "com.ibrahimuysal-Ten-Timer.currentTimer"
     let selectedTimerIndex = "com.ibrahimuysal-Ten-Timer.selectedTimerIndex"
     let fromInner = "com.ibrahimuysal-Ten-Timer.fromInner"
-    let isVibrate = "com.ibrahimuysal-Ten-Timer.isVibrate"
     
     func getCGFloatValue(_ key: String) -> CGFloat {
        return CGFloat(UserDefaults.standard.integer(forKey: key))

@@ -99,8 +99,12 @@ class TimerController: UIViewController {
     private func checkIfInnerTimerCompleted() {
         if timerMode == .all {
             if Int(timerCounter) > compoundSecondsArray[currentTimer] {
-                let sound = soundArray[Int(timer.innerTimerArray[currentTimer].soundInt)]
+                let innerTimer = timer.innerTimerArray[currentTimer]
+                if innerTimer.isVibrate { AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate)) }
+                
+                let sound = soundArray[Int(innerTimer.soundInt)]
                 Player.shared.play(sound: sound)
+                
                 currentTimer += 1
                 updateTitles()
             }
@@ -125,11 +129,10 @@ class TimerController: UIViewController {
     private func handleStop(_ stopOption: StopOptions? = .auto) {
         timeR.invalidate()
         if stopOption == .auto {
-            if UDM.getBoolValue(UDM.isVibrate) {
-                AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-            }
+            let innerTimer = timer.innerTimerArray[currentTimer]
+            if innerTimer.isVibrate { AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate)) }
             
-            let sound = soundArray[Int(timer.innerTimerArray[currentTimer].soundInt)]
+            let sound = soundArray[Int(innerTimer.soundInt)]
             Player.shared.play(sound: sound)
         } else {
             showStopAlert()

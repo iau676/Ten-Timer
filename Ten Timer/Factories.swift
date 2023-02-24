@@ -30,7 +30,6 @@ func makePaddingLabel(withText text: String) -> UILabel {
     return label
 }
 
-
 class UILabelPadding: UILabel {
     let padding = UIEdgeInsets(top: 2, left: 16, bottom: 2, right: 8)
     override func drawText(in rect: CGRect) {
@@ -55,7 +54,7 @@ func makeButton(withText text: String, backgroundColor: UIColor = .systemGray4) 
     button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
     button.setTitleColor(.label, for: .normal)
     button.contentHorizontalAlignment = .left
-    button.layer.cornerRadius = 8
+    button.layer.cornerRadius = 10
     
     return button
 }

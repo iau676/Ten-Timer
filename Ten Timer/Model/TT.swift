@@ -26,7 +26,6 @@ struct TT {
         let newInnerTimer = InnerTimer(context: self.context)
         newInnerTimer.date = Date()
         newInnerTimer.uuid = UUID()
-        newInnerTimer.title = "Title\(number+1)"
         newInnerTimer.seconds = Int64(defaultSeconds[number])
         newInnerTimer.colorInt = Int64(number)
         newInnerTimer.soundInt = Int64(number)
@@ -45,7 +44,6 @@ struct TT {
         let newInnerTimer = InnerTimer(context: self.context)
         newInnerTimer.date = Date()
         newInnerTimer.uuid = UUID()
-        newInnerTimer.title = "Title\(timerNumber+1).\(innerTimerArrayCount+1)"
         newInnerTimer.seconds = defaultSeconds[timerNumber]
         newInnerTimer.colorInt = Int64(timerNumber)
         newInnerTimer.soundInt = Int64(timerNumber)
@@ -90,6 +88,11 @@ struct TT {
     
     func updateInnerTimerColor(innerTimer: InnerTimer, newColorInt: Int) {
         innerTimer.colorInt = Int64(newColorInt)
+        saveContext()
+    }
+    
+    func updateInnerTimerVibrate(innerTimer: InnerTimer, isVibrate: Bool) {
+        innerTimer.isVibrate = isVibrate
         saveContext()
     }
     

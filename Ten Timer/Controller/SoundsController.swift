@@ -57,7 +57,7 @@ class SoundsController: UIViewController {
         if sender.isOn {
             AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
         }
-        UDM.setValue(sender.isOn, UDM.isVibrate)
+        TT.shared.updateInnerTimerVibrate(innerTimer: innerTimer, isVibrate: sender.isOn)
     }
     
     @objc private func dismissView() {
@@ -98,7 +98,7 @@ class SoundsController: UIViewController {
         vibrateLabel.layer.masksToBounds = true
         vibrateLabel.setViewCornerRadius(10)
         
-        vibrateSwitch.isOn = UDM.getBoolValue(UDM.isVibrate)
+        vibrateSwitch.isOn = innerTimer.isVibrate
         vibrateSwitch.addTarget(self, action: #selector(vibrateChanged), for: .valueChanged)
         
         tableView.dataSource = self
@@ -126,7 +126,7 @@ class SoundsController: UIViewController {
         soundGuideButton.setHeight(height: 50)
         vibrateLabel.setHeight(height: 50)
         
-        vibrateLabel.addSubview(vibrateSwitch)
+        stack.addSubview(vibrateSwitch)
         vibrateSwitch.centerY(inView: vibrateLabel)
         vibrateSwitch.anchor(right: vibrateLabel.rightAnchor, paddingRight: 16)
         
