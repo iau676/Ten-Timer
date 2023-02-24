@@ -12,7 +12,7 @@ struct InnerTimerViewModel {
     var innerTimer: InnerTimer
     
     var title: String {
-        return innerTimer.title ?? "Title"
+        return innerTimer.title ?? ""
     }
     
     var totalSecondsStr: String {

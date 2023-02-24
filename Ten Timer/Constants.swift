@@ -12,7 +12,7 @@ let UDM = UserDefaultsManager.shared
 var colorArray = [Color]()
 var soundArray = [Sound]()
 
-let defaultSeconds: [Int64] = [3,5,10,20,25,30,40,45,6550,130]
+let defaultSeconds: [Int64] = [30,45,60,90,120,300,600,1200,3600,5400]
 
 let hours = [00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23]
 
