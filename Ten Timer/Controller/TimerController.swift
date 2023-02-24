@@ -101,16 +101,19 @@ class TimerController: UIViewController {
     private func checkIfInnerTimerCompleted() {
         if timerMode == .all {
             if Int(timerCounter) > compoundSecondsArray[currentTimer] {
-                let innerTimer = timer.innerTimerArray[currentTimer]
-                if innerTimer.isVibrate { AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate)) }
-                
-                let sound = soundArray[Int(innerTimer.soundInt)]
-                Player.shared.play(sound: sound)
-                
                 currentTimer += 1
+                playSound()
                 updateTitles()
             }
         }
+    }
+    
+    private func playSound() {
+        let innerTimer = timer.innerTimerArray[currentTimer]
+        if innerTimer.isVibrate { AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate)) }
+
+        let sound = soundArray[Int(innerTimer.soundInt)]
+        Player.shared.play(sound: sound)
     }
     
     private func handleAnimation() {
@@ -130,12 +133,9 @@ class TimerController: UIViewController {
     
     private func handleStop(_ stopOption: StopOptions? = .auto) {
         timeR.invalidate()
+        NotificationCenter.default.removeObserver(self)
         if stopOption == .auto {
-            let innerTimer = timer.innerTimerArray[currentTimer]
-            if innerTimer.isVibrate { AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate)) }
-            
-            let sound = soundArray[Int(innerTimer.soundInt)]
-            Player.shared.play(sound: sound)
+            playSound()
         } else {
             showStopAlert()
         }
@@ -266,6 +266,14 @@ class TimerController: UIViewController {
                 }
             }
         }
+        
+        //update current timer for relaunch
+         for i in 0..<compoundSecondsArray.count {
+             if Int(timerCounter) > compoundSecondsArray[i] {
+                 currentTimer = i+1
+             }
+         }
+        
     }
     
     private func style(){
