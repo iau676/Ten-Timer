@@ -17,12 +17,11 @@ struct Player {
         let url = Bundle.main.url(forResource: "\(soundName)", withExtension: "m4a")
         player = try! AVAudioPlayer(contentsOf: url!)
         do {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
+            try AVAudioSession.sharedInstance().setCategory(.playback)
             try AVAudioSession.sharedInstance().setActive(true)
         } catch {
          print(error)
         }
-        //player.numberOfLoops = -1
         player.play()
     }
     

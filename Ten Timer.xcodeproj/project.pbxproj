@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		700656B9299BD254003FEA91 /* TimerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700656B8299BD254003FEA91 /* TimerController.swift */; };
+		7007102B29A9656C0059088D /* bell-123742.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7007102A29A9656C0059088D /* bell-123742.m4a */; };
+		7007102E29A96B9C0059088D /* wolf-howling-140235.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7007102C29A96B9C0059088D /* wolf-howling-140235.m4a */; };
+		7007102F29A96B9C0059088D /* cardinal-37075.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7007102D29A96B9C0059088D /* cardinal-37075.m4a */; };
 		70B9062829A3655200FC83CB /* InnerTimerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B9062729A3655200FC83CB /* InnerTimerCell.swift */; };
 		70B9062A29A36E7D00FC83CB /* InnerTimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B9062929A36E7D00FC83CB /* InnerTimerViewModel.swift */; };
 		70B9062E29A37AEF00FC83CB /* InnerTimerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70B9062D29A37AEF00FC83CB /* InnerTimerController.swift */; };
@@ -68,7 +71,6 @@
 		70C9EF31299EDEF300BCDF00 /* big-alert-136677.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 70C9EECD299EDEE900BCDF00 /* big-alert-136677.m4a */; };
 		70C9EF32299EDEF300BCDF00 /* madness-137820.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 70C9EECE299EDEE900BCDF00 /* madness-137820.m4a */; };
 		70C9EF33299EDEF300BCDF00 /* gate-of-heaven-128130.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 70C9EECF299EDEE900BCDF00 /* gate-of-heaven-128130.m4a */; };
-		70C9EF34299EDEF300BCDF00 /* attack-laser-128280.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 70C9EED0299EDEE900BCDF00 /* attack-laser-128280.m4a */; };
 		70C9EF35299EDEF300BCDF00 /* u-morse-code-131798.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 70C9EED1299EDEE900BCDF00 /* u-morse-code-131798.m4a */; };
 		70C9EF36299EDEF300BCDF00 /* siren-128562.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 70C9EED2299EDEEA00BCDF00 /* siren-128562.m4a */; };
 		70C9EF37299EDEF300BCDF00 /* natural-light-138426.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 70C9EED3299EDEEA00BCDF00 /* natural-light-138426.m4a */; };
@@ -110,7 +112,6 @@
 		70C9EF5B299EDEF300BCDF00 /* mallets-137665.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 70C9EEF7299EDEEF00BCDF00 /* mallets-137665.m4a */; };
 		70C9EF5C299EDEF300BCDF00 /* spring-day-132408.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 70C9EEF8299EDEEF00BCDF00 /* spring-day-132408.m4a */; };
 		70C9EF5D299EDEF300BCDF00 /* sea-of-voices-bells-138433.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 70C9EEF9299EDEEF00BCDF00 /* sea-of-voices-bells-138433.m4a */; };
-		70C9EF5E299EDEF300BCDF00 /* saturns-downbeat-137419.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 70C9EEFA299EDEEF00BCDF00 /* saturns-downbeat-137419.m4a */; };
 		70C9EF5F299EDEF300BCDF00 /* ratte-tale-137666.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 70C9EEFB299EDEEF00BCDF00 /* ratte-tale-137666.m4a */; };
 		70C9EF60299EDEF300BCDF00 /* shepard-tone-137065.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 70C9EEFC299EDEF000BCDF00 /* shepard-tone-137065.m4a */; };
 		70C9EF61299EDEF300BCDF00 /* shadow-137825.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 70C9EEFD299EDEF000BCDF00 /* shadow-137825.m4a */; };
@@ -123,7 +124,6 @@
 		70C9EF68299EDEF300BCDF00 /* big-ben-129049.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 70C9EF04299EDEF100BCDF00 /* big-ben-129049.m4a */; };
 		70C9EF69299EDEF300BCDF00 /* dream-spiral-138336.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 70C9EF05299EDEF100BCDF00 /* dream-spiral-138336.m4a */; };
 		70C9EF6A299EDEF300BCDF00 /* drops-of-electricity-129230.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 70C9EF06299EDEF100BCDF00 /* drops-of-electricity-129230.m4a */; };
-		70C9EF6B299EDEF300BCDF00 /* mcools-downbeat-137278.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 70C9EF07299EDEF100BCDF00 /* mcools-downbeat-137278.m4a */; };
 		70C9EF6C299EDEF300BCDF00 /* cling-137907.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 70C9EF08299EDEF100BCDF00 /* cling-137907.m4a */; };
 		70C9EF6D299EDEF300BCDF00 /* nintendo-135443.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 70C9EF09299EDEF100BCDF00 /* nintendo-135443.m4a */; };
 		70C9EF6E299EDEF300BCDF00 /* glider-137134.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 70C9EF0A299EDEF100BCDF00 /* glider-137134.m4a */; };
@@ -146,6 +146,9 @@
 
 /* Begin PBXFileReference section */
 		700656B8299BD254003FEA91 /* TimerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerController.swift; sourceTree = "<group>"; };
+		7007102A29A9656C0059088D /* bell-123742.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "bell-123742.m4a"; sourceTree = "<group>"; };
+		7007102C29A96B9C0059088D /* wolf-howling-140235.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "wolf-howling-140235.m4a"; sourceTree = "<group>"; };
+		7007102D29A96B9C0059088D /* cardinal-37075.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "cardinal-37075.m4a"; sourceTree = "<group>"; };
 		70B9062729A3655200FC83CB /* InnerTimerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InnerTimerCell.swift; sourceTree = "<group>"; };
 		70B9062929A36E7D00FC83CB /* InnerTimerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InnerTimerViewModel.swift; sourceTree = "<group>"; };
 		70B9062D29A37AEF00FC83CB /* InnerTimerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InnerTimerController.swift; sourceTree = "<group>"; };
@@ -208,7 +211,6 @@
 		70C9EECD299EDEE900BCDF00 /* big-alert-136677.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "big-alert-136677.m4a"; sourceTree = "<group>"; };
 		70C9EECE299EDEE900BCDF00 /* madness-137820.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "madness-137820.m4a"; sourceTree = "<group>"; };
 		70C9EECF299EDEE900BCDF00 /* gate-of-heaven-128130.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "gate-of-heaven-128130.m4a"; sourceTree = "<group>"; };
-		70C9EED0299EDEE900BCDF00 /* attack-laser-128280.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "attack-laser-128280.m4a"; sourceTree = "<group>"; };
 		70C9EED1299EDEE900BCDF00 /* u-morse-code-131798.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "u-morse-code-131798.m4a"; sourceTree = "<group>"; };
 		70C9EED2299EDEEA00BCDF00 /* siren-128562.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "siren-128562.m4a"; sourceTree = "<group>"; };
 		70C9EED3299EDEEA00BCDF00 /* natural-light-138426.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "natural-light-138426.m4a"; sourceTree = "<group>"; };
@@ -250,7 +252,6 @@
 		70C9EEF7299EDEEF00BCDF00 /* mallets-137665.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "mallets-137665.m4a"; sourceTree = "<group>"; };
 		70C9EEF8299EDEEF00BCDF00 /* spring-day-132408.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "spring-day-132408.m4a"; sourceTree = "<group>"; };
 		70C9EEF9299EDEEF00BCDF00 /* sea-of-voices-bells-138433.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "sea-of-voices-bells-138433.m4a"; sourceTree = "<group>"; };
-		70C9EEFA299EDEEF00BCDF00 /* saturns-downbeat-137419.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "saturns-downbeat-137419.m4a"; sourceTree = "<group>"; };
 		70C9EEFB299EDEEF00BCDF00 /* ratte-tale-137666.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ratte-tale-137666.m4a"; sourceTree = "<group>"; };
 		70C9EEFC299EDEF000BCDF00 /* shepard-tone-137065.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "shepard-tone-137065.m4a"; sourceTree = "<group>"; };
 		70C9EEFD299EDEF000BCDF00 /* shadow-137825.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "shadow-137825.m4a"; sourceTree = "<group>"; };
@@ -263,7 +264,6 @@
 		70C9EF04299EDEF100BCDF00 /* big-ben-129049.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "big-ben-129049.m4a"; sourceTree = "<group>"; };
 		70C9EF05299EDEF100BCDF00 /* dream-spiral-138336.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "dream-spiral-138336.m4a"; sourceTree = "<group>"; };
 		70C9EF06299EDEF100BCDF00 /* drops-of-electricity-129230.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "drops-of-electricity-129230.m4a"; sourceTree = "<group>"; };
-		70C9EF07299EDEF100BCDF00 /* mcools-downbeat-137278.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "mcools-downbeat-137278.m4a"; sourceTree = "<group>"; };
 		70C9EF08299EDEF100BCDF00 /* cling-137907.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "cling-137907.m4a"; sourceTree = "<group>"; };
 		70C9EF09299EDEF100BCDF00 /* nintendo-135443.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "nintendo-135443.m4a"; sourceTree = "<group>"; };
 		70C9EF0A299EDEF100BCDF00 /* glider-137134.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "glider-137134.m4a"; sourceTree = "<group>"; };
@@ -413,10 +413,10 @@
 		70C9EE91299E339600BCDF00 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				7007102A29A9656C0059088D /* bell-123742.m4a */,
 				70C9EEE6299EDEEC00BCDF00 /* add-kick-138064.m4a */,
 				70C9EEEC299EDEED00BCDF00 /* alien-interface-132922.m4a */,
 				70C9EED6299EDEEA00BCDF00 /* atmospheric-percussion-132654.m4a */,
-				70C9EED0299EDEE900BCDF00 /* attack-laser-128280.m4a */,
 				70C9EEDE299EDEEB00BCDF00 /* bachelor-137658.m4a */,
 				70C9EECD299EDEE900BCDF00 /* big-alert-136677.m4a */,
 				70C9EEC4299EDEE800BCDF00 /* big-bang-137133.m4a */,
@@ -456,7 +456,6 @@
 				70C9EEBC299EDEE700BCDF00 /* loneliness-136818.m4a */,
 				70C9EECE299EDEE900BCDF00 /* madness-137820.m4a */,
 				70C9EEF7299EDEEF00BCDF00 /* mallets-137665.m4a */,
-				70C9EF07299EDEF100BCDF00 /* mcools-downbeat-137278.m4a */,
 				70C9EEC1299EDEE700BCDF00 /* mechanic-up-137821.m4a */,
 				70C9EECC299EDEE900BCDF00 /* metallic-playground-128426.m4a */,
 				70C9EF12299EDEF300BCDF00 /* modulation-cowbell-137279.m4a */,
@@ -478,10 +477,11 @@
 				70C9EEB8299EDEE600BCDF00 /* robotic-shoot-138432.m4a */,
 				70C9EEDB299EDEEB00BCDF00 /* s-bird-voices-7716.m4a */,
 				70C9EED5299EDEEA00BCDF00 /* s-birds-frogs-nature-8257.m4a */,
-				70C9EEFA299EDEEF00BCDF00 /* saturns-downbeat-137419.m4a */,
 				70C9EEEE299EDEEE00BCDF00 /* schlagbolzen-137064.m4a */,
 				70C9EEF9299EDEEF00BCDF00 /* sea-of-voices-bells-138433.m4a */,
 				70C9EEFD299EDEF000BCDF00 /* shadow-137825.m4a */,
+				7007102D29A96B9C0059088D /* cardinal-37075.m4a */,
+				7007102C29A96B9C0059088D /* wolf-howling-140235.m4a */,
 				70C9EEFC299EDEF000BCDF00 /* shepard-tone-137065.m4a */,
 				70C9EEE2299EDEEC00BCDF00 /* shine-down-135681.m4a */,
 				70C9EEED299EDEED00BCDF00 /* ship-siren-137067.m4a */,
@@ -602,13 +602,13 @@
 				70C9EF68299EDEF300BCDF00 /* big-ben-129049.m4a in Resources */,
 				70C9EF56299EDEF300BCDF00 /* telephone-ring-129620.m4a in Resources */,
 				70C9EF25299EDEF300BCDF00 /* mechanic-up-137821.m4a in Resources */,
-				70C9EF6B299EDEF300BCDF00 /* mcools-downbeat-137278.m4a in Resources */,
 				70C9EF52299EDEF300BCDF00 /* schlagbolzen-137064.m4a in Resources */,
 				70C9EF6A299EDEF300BCDF00 /* drops-of-electricity-129230.m4a in Resources */,
 				70C9EF2C299EDEF300BCDF00 /* temple-137503.m4a in Resources */,
 				70C9EF49299EDEF300BCDF00 /* p-train-steam-whistle-1-99274.m4a in Resources */,
 				70C9EF1B299EDEF300BCDF00 /* clinking-of-glasses-129822.m4a in Resources */,
 				70C9EF66299EDEF300BCDF00 /* divinity-138419.m4a in Resources */,
+				7007102E29A96B9C0059088D /* wolf-howling-140235.m4a in Resources */,
 				70C9EF3E299EDEF300BCDF00 /* huge-downer-132531.m4a in Resources */,
 				70C9EF43299EDEF300BCDF00 /* hope-dies-last-136817.m4a in Resources */,
 				70C9EF1D299EDEF300BCDF00 /* u-piano-for-youtube-131799.m4a in Resources */,
@@ -662,12 +662,12 @@
 				70C9EF4F299EDEF300BCDF00 /* bop-137905.m4a in Resources */,
 				70C9EF5C299EDEF300BCDF00 /* spring-day-132408.m4a in Resources */,
 				70C9EF63299EDEF300BCDF00 /* convergence-132924.m4a in Resources */,
+				7007102B29A9656C0059088D /* bell-123742.m4a in Resources */,
 				70C9EF6E299EDEF300BCDF00 /* glider-137134.m4a in Resources */,
-				70C9EF34299EDEF300BCDF00 /* attack-laser-128280.m4a in Resources */,
 				70C9EF24299EDEF300BCDF00 /* drum-and-bass-drums-loop-160-bpm-1-131244.m4a in Resources */,
 				70BCD5B329999C5E000D89B7 /* Assets.xcassets in Resources */,
-				70C9EF5E299EDEF300BCDF00 /* saturns-downbeat-137419.m4a in Resources */,
 				70C9EF28299EDEF300BCDF00 /* big-bang-137133.m4a in Resources */,
+				7007102F29A96B9C0059088D /* cardinal-37075.m4a in Resources */,
 				70C9EF5D299EDEF300BCDF00 /* sea-of-voices-bells-138433.m4a in Resources */,
 				70C9EF23299EDEF300BCDF00 /* turbulent-flow-138764.m4a in Resources */,
 				70C9EF2F299EDEF300BCDF00 /* power-up-137911.m4a in Resources */,

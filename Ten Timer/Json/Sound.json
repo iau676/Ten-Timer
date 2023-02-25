@@ -30,8 +30,8 @@
         "seconds" : 3
     },
     {
-        "id" : "attack-laser-128280",
-        "name" : "Attack Laser",
+        "id" : "bell-123742",
+        "name" : "Bike",
         "seconds" : 1
     },
     {
@@ -200,6 +200,11 @@
         "seconds" : 20
     },
     {
+        "id" : "cardinal-37075",
+        "name" : "Cardinal",
+        "seconds" : 4
+    },
+    {
         "id" : "huge-downer-132531",
         "name" : "Downer",
         "seconds" : 4
@@ -222,11 +227,6 @@
         "id" : "mallets-137665",
         "name" : "Mallets",
         "seconds" : 2
-    },
-    {
-        "id" : "mcools-downbeat-137278",
-        "name" : "Mcools Downbeat",
-        "seconds" : 15
     },
     {
         "id" : "mechanic-up-137821",
@@ -334,11 +334,6 @@
         "seconds" : 30
     },
     {
-        "id" : "saturns-downbeat-137419",
-        "name" : "Saturns Downbeat",
-        "seconds" : 16
-    },
-    {
         "id" : "schlagbolzen-137064",
         "name" : "Schlagbolzen",
         "seconds" : 5
@@ -361,6 +356,11 @@
     {
         "id" : "shine-down-135681",
         "name" : "Shine Down",
+        "seconds" : 5
+    },
+    {
+        "id" : "turn-down-137915",
+        "name" : "Turn Down",
         "seconds" : 5
     },
     {
@@ -449,11 +449,6 @@
         "seconds" : 16
     },
     {
-        "id" : "turn-down-137915",
-        "name" : "Turn Down",
-        "seconds" : 5
-    },
-    {
         "id" : "u-happy-123735",
         "name" : "Happy",
         "seconds" : 15
@@ -496,6 +491,11 @@
     {
         "id" : "whip-137920",
         "name" : "Whip",
+        "seconds" : 5
+    },
+    {
+        "id" : "wolf-howling-140235",
+        "name" : "Wolf",
         "seconds" : 5
     },
     {
