@@ -138,8 +138,14 @@ class SettingsController: UIViewController {
     }
     
     private func showDeleteAlert() {
-        let alert = UIAlertController(title: nil, message: "Are you sure you want to delete?",
+        
+        var alert = UIAlertController(title: nil, message: "Are you sure you want to delete?",
                                       preferredStyle: .actionSheet)
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            alert = UIAlertController(title: nil, message: "Are you sure you want to delete?",
+                                      preferredStyle: .alert)
+        }
         
         alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
             self.dismiss(animated: true) {

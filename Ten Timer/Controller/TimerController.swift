@@ -112,8 +112,8 @@ class TimerController: UIViewController {
     private func checkIfInnerTimerCompleted() {
         if timerMode == .all {
             if Int(timerCounter) > compoundSecondsArray[currentTimer] {
-                currentTimer += 1
                 playSound()
+                currentTimer += 1
                 updateTitles()
             }
         }
