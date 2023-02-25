@@ -65,7 +65,7 @@ class SoundsController: UIViewController {
     }
     
     @objc private func soundGuidePressed() {
-        showSoundGuideAlert()
+        showAlert(title: "", errorMessage: "Ten Timer is not an alarm app. When Ten Timer is in the background, you will receive iOS notifications as usual. If your device is in silent mode, you cannot hear sounds due to iOS limits on third-party apps.")
     }
     
     //MARK: - Helpers
@@ -133,16 +133,6 @@ class SoundsController: UIViewController {
         view.addSubview(dismissButton)
         dismissButton.anchor(top: view.topAnchor, left: view.leftAnchor,
                              bottom: stack.topAnchor, right: view.rightAnchor)
-    }
-    
-    private func showSoundGuideAlert() {
-        let alert = UIAlertController(title: "", message: "Ten Timer is not an alarm app. When Ten Timer is in the background, you will receive iOS notifications as usual. If your device is in silent mode, you cannot hear sounds due to iOS limits on third-party apps.", preferredStyle: .alert)
-       
-        let actionOK = UIAlertAction(title: "OK", style: .default) { (action) in
-            alert.dismiss(animated: true, completion: nil)
-        }
-        alert.addAction(actionOK)
-        self.present(alert, animated: true, completion: nil)
     }
 }
 

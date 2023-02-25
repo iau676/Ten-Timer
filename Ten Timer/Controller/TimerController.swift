@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import AudioToolbox
+import AVFoundation
 import NotificationCenter
 
 enum StopOptions {
@@ -73,6 +73,17 @@ class TimerController: UIViewController {
     
     @objc func appMovedToBackground() {
         setNotification(remindSecond: totalSecond-(timerCounter-1))
+    }
+    
+    @objc private func handleNotification() {
+        if let url = URL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(url)
+        }
+    }
+    
+    @objc private func handleMute() {
+        showAlert(title: "", errorMessage: "Please increase the volume to hear sounds.")
+        navigationItem.leftBarButtonItem = UIBarButtonItem()
     }
     
     //MARK: - Helpers
@@ -331,11 +342,40 @@ class TimerController: UIViewController {
     
     private func configureNavigationBar() {
         updateTitles()
-        navigationItem.leftBarButtonItem = UIBarButtonItem()
+        configureLeftBarButton()
+        configureRightBarButton()
+    }
+    
+    private func configureLeftBarButton() {
+        let mute = UIImageView()
+        mute.setDimensions(height: 32, width: 32)
+        mute.image = UIImage(named: "mute")?.withTintColor(.label)
+        let muteTap = UITapGestureRecognizer(target: self, action: #selector(handleMute))
+        mute.addGestureRecognizer(muteTap)
         
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.isTranslucent = true
+        do {
+            try AVAudioSession.sharedInstance().setActive(true)
+            let vol = AVAudioSession.sharedInstance().outputVolume
+            self.navigationItem.leftBarButtonItem = vol == 0.0 ? UIBarButtonItem(customView: mute) : UIBarButtonItem()
+        } catch {
+         print(error)
+        }
+    }
+    
+    private func configureRightBarButton() {
+        let notification = UIImageView()
+        notification.setDimensions(height: 32, width: 32)
+        notification.image = UIImage(named: "notification")?.withTintColor(.label)
+        let notificationTap = UITapGestureRecognizer(target: self, action: #selector(handleNotification))
+        notification.addGestureRecognizer(notificationTap)
+        
+        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+            if settings.authorizationStatus != .authorized {
+                DispatchQueue.main.async {
+                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: notification)
+                }
+            }
+        }
     }
     
     private func updateTitles() {
