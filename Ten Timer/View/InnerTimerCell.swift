@@ -126,7 +126,7 @@ class InnerTimerCell: UICollectionViewCell {
         soundLabel.text = viewModel.soundName
         contentView.backgroundColor = viewModel.color
         
-        settingsButton.setImageWithRenderingMode(image: UIImage(named: "dots"),
+        settingsButton.setImageWithRenderingMode(image: Images.dots,
                                                  width: 15, height: 15,
                                                  color: viewModel.color)
     }

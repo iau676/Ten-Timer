@@ -7,6 +7,8 @@
 
 import UIKit
 
+//MARK: - Label
+
 func makeLabel(withText text: String, size: CGFloat = 17, color: UIColor = .label) -> UILabel {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false // important!
@@ -44,6 +46,8 @@ class UILabelPadding: UILabel {
     }
 }
 
+//MARK: - Button
+
 func makeButton(withText text: String, backgroundColor: UIColor = .systemGray4) -> UIButton {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
@@ -59,10 +63,22 @@ func makeButton(withText text: String, backgroundColor: UIColor = .systemGray4) 
     return button
 }
 
+//MARK: - Switch
+
 func makeSwitch(isOn: Bool) -> UISwitch {
     let theSwitch = UISwitch()
     theSwitch.translatesAutoresizingMaskIntoConstraints = false
     theSwitch.isOn = isOn
 
     return theSwitch
+}
+
+//MARK: - Image View
+
+func makeImageView(height: CGFloat, width: CGFloat, image: UIImage?) -> UIImageView {
+    let iv = UIImageView()
+    iv.setDimensions(height: height, width: width)
+    iv.image = image?.withTintColor(.label)
+
+    return iv
 }

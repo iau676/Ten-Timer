@@ -24,6 +24,8 @@ class TimerController: UIViewController {
     //MARK: - Properties
     
     private let timer: TTimer
+    var timerMode: TimerMode = .all
+    var currentTimer: Int = UDM.getIntValue(UDM.currentTimer)
     
     private let stopButton = UIButton()
     private let timerView = UIView()
@@ -31,16 +33,15 @@ class TimerController: UIViewController {
     
     private var timeR = Timer()
     private var timerCounter: CGFloat = UDM.getCGFloatValue(UDM.currentTimerCounter)+1
-    private var totalSecond: CGFloat = 0
-    let notificationCenter = UNUserNotificationCenter.current()
+    private lazy var totalSecond: CGFloat = timerMode == .all ? CGFloat(timer.totalSeconds) :
+                                                                CGFloat(timer.innerTimerArray[currentTimer].seconds)
     
-    var currentTimer: Int = UDM.getIntValue(UDM.currentTimer)
-    var timerMode: TimerMode = .all
-    var titleForNotification: String = ""
+    private var titleForNotification: String = ""
+    private var viewArray: [UIView] = []
+    private var secondsArray: [Int] = []
+    private var compoundSecondsArray: [Int] = []
     
-    var viewArray: [UIView] = []
-    var secondsArray: [Int] = []
-    var compoundSecondsArray: [Int] = []
+    private let notificationCenter = UNUserNotificationCenter.current()
     
     //MARK: - Lifecycle
     
@@ -57,12 +58,9 @@ class TimerController: UIViewController {
         super.viewDidLoad()
         startTimer()
         configureNavigationBar()
-        configureViews()
         style()
         layout()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(appMovedToBackground),
-                                               name: UIApplication.willResignActiveNotification, object: nil)
+        addObserver()
     }
     
     //MARK: - Selectors
@@ -152,7 +150,7 @@ class TimerController: UIViewController {
         }
     }
     
-    private func showStopAlert() {
+    private func showStopAlert() {        
         let alert = UIAlertController(title: "Are you sure you want to stop timer?", message: "", preferredStyle: .alert)
         let actionStop = UIAlertAction(title: "Stop", style: .destructive) { (action) in
             self.navigationController?.popViewController(animated: true)
@@ -167,15 +165,15 @@ class TimerController: UIViewController {
     }
     
     private func showCompletedAlert() {
-        let alert = UIAlertController(title: "Timer Completed", message: "", preferredStyle: .alert)
-       
-        let actionOK = UIAlertAction(title: "OK", style: .default) { (action) in
+        showAlert(title: "Timer Completed", errorMessage: "") { OKpressed in
             Player.shared.stopSound()
             self.navigationController?.popViewController(animated: false)
-            alert.dismiss(animated: false, completion: nil)
         }
-        alert.addAction(actionOK)
-        self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func addObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(appMovedToBackground),
+                                               name: UIApplication.willResignActiveNotification, object: nil)
     }
     
     //MARK: - Notification
@@ -193,7 +191,7 @@ class TimerController: UIViewController {
         }
     }
     
-    func setNotification(remindSecond: CGFloat){
+    func setNotification(remindSecond: CGFloat) {
         timeR.invalidate()
         self.navigationController?.popToRootViewController(animated: false)
         if remindSecond > 0 {
@@ -280,7 +278,7 @@ class TimerController: UIViewController {
         if currentTimer > 0 && timerMode == .all {
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) {
                 for i in 0...self.currentTimer {
-                        self.viewArray[i].setHeightWithAnimation(self.view.bounds.height, animateTime: 1.5)
+                    self.viewArray[i].setHeightWithAnimation(self.view.bounds.height, animateTime: 1.5)
                 }
             }
         }
@@ -289,9 +287,7 @@ class TimerController: UIViewController {
     private func style(){
         view.backgroundColor = .systemGroupedBackground
         
-        totalSecond = timerMode == .all ?
-        CGFloat(timer.totalSeconds) :
-        CGFloat(timer.innerTimerArray[currentTimer].seconds)
+        configureViews()
      
         let hex = colorArray[Int(timer.innerTimerArray[currentTimer].colorInt)].hex
         timerView.backgroundColor = UIColor(hex: "#\(hex)")
@@ -340,6 +336,8 @@ class TimerController: UIViewController {
         stopButton.centerX(inView: view)
     }
     
+    //MARK: - NavigationBar
+    
     private func configureNavigationBar() {
         updateTitles()
         configureLeftBarButton()
@@ -347,32 +345,30 @@ class TimerController: UIViewController {
     }
     
     private func configureLeftBarButton() {
-        let mute = UIImageView()
-        mute.setDimensions(height: 32, width: 32)
-        mute.image = UIImage(named: "mute")?.withTintColor(.label)
+        let muteIV = makeImageView(height: 32, width: 32, image: Images.mute)
+        
         let muteTap = UITapGestureRecognizer(target: self, action: #selector(handleMute))
-        mute.addGestureRecognizer(muteTap)
+        muteIV.addGestureRecognizer(muteTap)
         
         do {
             try AVAudioSession.sharedInstance().setActive(true)
             let vol = AVAudioSession.sharedInstance().outputVolume
-            self.navigationItem.leftBarButtonItem = vol == 0.0 ? UIBarButtonItem(customView: mute) : UIBarButtonItem()
+            self.navigationItem.leftBarButtonItem = vol == 0.0 ? UIBarButtonItem(customView: muteIV) : UIBarButtonItem()
         } catch {
          print(error)
         }
     }
     
     private func configureRightBarButton() {
-        let notification = UIImageView()
-        notification.setDimensions(height: 32, width: 32)
-        notification.image = UIImage(named: "notification")?.withTintColor(.label)
-        let notificationTap = UITapGestureRecognizer(target: self, action: #selector(handleNotification))
-        notification.addGestureRecognizer(notificationTap)
+        let notificationIV = makeImageView(height: 32, width: 32, image: Images.notification)
+        
+        let ivTap = UITapGestureRecognizer(target: self, action: #selector(self.handleNotification))
+        notificationIV.addGestureRecognizer(ivTap)
         
         UNUserNotificationCenter.current().getNotificationSettings { (settings) in
             if settings.authorizationStatus != .authorized {
                 DispatchQueue.main.async {
-                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: notification)
+                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: notificationIV)
                 }
             }
         }

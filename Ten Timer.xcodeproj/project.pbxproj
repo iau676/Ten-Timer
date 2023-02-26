@@ -870,6 +870,7 @@
 				DEVELOPMENT_TEAM = UA5J3LA7RU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Ten Timer/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Ten Timer";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -899,6 +900,7 @@
 				DEVELOPMENT_TEAM = UA5J3LA7RU;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Ten Timer/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Ten Timer";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

@@ -24,6 +24,12 @@ enum Colors {
     static let f6f6f6                    = UIColor(hex: "#f6f6f6")
 }
 
+enum Images {
+    static let dots                      = UIImage(named: "dots")
+    static let mute                      = UIImage(named: "mute")
+    static let notification              = UIImage(named: "notification")
+}
+
 enum Fonts {
     static var AvenirNextRegular         = "AvenirNext-Regular"
     static var AvenirNextDemiBold        = "AvenirNext-DemiBold"

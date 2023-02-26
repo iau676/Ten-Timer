@@ -123,7 +123,7 @@ class TimerCell: UICollectionViewCell {
         numberButton.setTitle("\(timer.timerNumber+1)", for: .normal)
         contentView.backgroundColor = viewModel.color
         
-        settingsButton.setImageWithRenderingMode(image: UIImage(named: "dots"),
+        settingsButton.setImageWithRenderingMode(image: Images.dots,
                                                  width: 15, height: 15,
                                                  color: viewModel.color)
         
