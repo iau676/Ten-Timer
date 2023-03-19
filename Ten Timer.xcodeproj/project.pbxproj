@@ -187,11 +187,11 @@
 			isa = PBXGroup;
 			children = (
 				70BCD5BD29999D41000D89B7 /* HomeController.swift */,
+				70B9062D29A37AEF00FC83CB /* InnerTimerController.swift */,
 				700656B8299BD254003FEA91 /* TimerController.swift */,
 				70BCD5D42999C8CF000D89B7 /* SettingsController.swift */,
 				70C9EF7E299FB58D00BCDF00 /* ColorController.swift */,
 				70C9EE8F299E227000BCDF00 /* SoundsController.swift */,
-				70B9062D29A37AEF00FC83CB /* InnerTimerController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";

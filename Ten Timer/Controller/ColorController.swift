@@ -124,6 +124,6 @@ extension ColorController: UICollectionViewDataSource {
 
 extension ColorController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: ((view.bounds.width)/4), height: ((view.bounds.width)/4))
+        return CGSize(width: ((view.bounds.width)/2), height: ((view.bounds.height)/5 - 7))
     }
 }

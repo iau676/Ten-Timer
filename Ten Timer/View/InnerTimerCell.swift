@@ -8,7 +8,7 @@
 import UIKit
 
 protocol InnerTimerCellDelegate: AnyObject {
-    func settingsPressed(index: Int)
+    func showSettings(index: Int)
 }
 
 class InnerTimerCell: UICollectionViewCell {
@@ -106,7 +106,7 @@ class InnerTimerCell: UICollectionViewCell {
     
     @objc private func settingsPressed() {
         guard let innerTimer = innerTimer else { return }
-        delegate?.settingsPressed(index: Int(innerTimer.timerNumber))
+        delegate?.showSettings(index: Int(innerTimer.timerNumber))
     }
     
     //MARK: - Helpers

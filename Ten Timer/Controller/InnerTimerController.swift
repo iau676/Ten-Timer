@@ -61,6 +61,7 @@ class InnerTimerController: UIViewController {
     @objc private func addBarButtonPressed() {
         TT.shared.addInnerTimer(timer: timer)
         innerTimerCV.reloadData()
+        showSettings(index: timer.innerTimerArray.count-1)
         checkInnerTimerCount()
     }
     
@@ -154,7 +155,7 @@ extension InnerTimerController {
 //MARK: - InnerTimerCellDelegate
 
 extension InnerTimerController: InnerTimerCellDelegate {
-    func settingsPressed(index: Int) {
+    func showSettings(index: Int) {
         let controller = SettingsController(timer: timer, index: index)
         controller.modalPresentationStyle = .overFullScreen
         navigationController?.pushViewController(controller, animated: true)
