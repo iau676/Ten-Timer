@@ -43,13 +43,13 @@ struct TT {
         let newInnerTimer = InnerTimer(context: self.context)
         newInnerTimer.date = Date()
         newInnerTimer.uuid = UUID()
-        newInnerTimer.seconds = defaultSeconds[timerNumber]
+        newInnerTimer.seconds = 1
         newInnerTimer.colorInt = Int64(timerNumber)
         newInnerTimer.soundInt = Int64(timerNumber)
         newInnerTimer.timerNumber = Int64(timer.innerTimerArray.count)
         newInnerTimer.isVibrate = true
         
-        timer.totalSeconds = timer.totalSeconds + defaultSeconds[timerNumber]
+        timer.totalSeconds = timer.totalSeconds + 1
         timer.addToInnerTimers(newInnerTimer)
         
         saveContext()

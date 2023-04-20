@@ -23,7 +23,6 @@ class SoundsController: UIViewController {
     
     private let lineView = UIView()
     private let dismissButton = UIButton()
-    private let soundGuideButton = makeButton(withText: "Sound Guide")
     private let vibrateLabel = makePaddingLabel(withText: "Vibrate")
     private let vibrateSwitch = makeSwitch(isOn: true)
     private let tableView = UITableView()
@@ -64,10 +63,6 @@ class SoundsController: UIViewController {
         dismiss(animated: true)
     }
     
-    @objc private func soundGuidePressed() {
-        showAlert(title: "", errorMessage: "Ten Timer is not an alarm app. When Ten Timer is in the background, you will receive iOS notifications as usual. If your device is in silent mode, you cannot hear sounds due to iOS limits on third-party apps.")
-    }
-    
     //MARK: - Helpers
     
     private func configureSelectedSound() {
@@ -92,11 +87,10 @@ class SoundsController: UIViewController {
         dismissButton.backgroundColor = .clear
         dismissButton.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
         
-        soundGuideButton.addTarget(self, action: #selector(soundGuidePressed), for: .touchUpInside)
-        
         vibrateLabel.backgroundColor = .systemGray4
         vibrateLabel.layer.masksToBounds = true
-        vibrateLabel.setViewCornerRadius(10)
+        vibrateLabel.layer.cornerRadius = 10
+        vibrateLabel.setHeight(height: 50)
         
         vibrateSwitch.isOn = innerTimer.isVibrate
         vibrateSwitch.addTarget(self, action: #selector(vibrateChanged), for: .valueChanged)
@@ -106,7 +100,7 @@ class SoundsController: UIViewController {
         tableView.register(SoundCell.self, forCellReuseIdentifier: reuseIdentifier)
         tableView.tableFooterView = UIView()
         tableView.backgroundColor = .clear
-        tableView.setViewCornerRadius(10)
+        tableView.layer.cornerRadius = 10
     }
     
     private func layout(){
@@ -114,7 +108,7 @@ class SoundsController: UIViewController {
         lineView.centerX(inView: view)
         lineView.anchor(top: view.topAnchor, paddingTop: 16)
         
-        let stack = UIStackView(arrangedSubviews: [soundGuideButton, vibrateLabel, tableView])
+        let stack = UIStackView(arrangedSubviews: [vibrateLabel, tableView])
         stack.spacing = 16
         stack.axis = .vertical
         
@@ -122,9 +116,6 @@ class SoundsController: UIViewController {
         stack.anchor(top: lineView.bottomAnchor, left: view.leftAnchor,
                      bottom: view.bottomAnchor, right: view.rightAnchor,
                      paddingTop: 16, paddingLeft: 16, paddingBottom: 16, paddingRight: 16)
-        
-        soundGuideButton.setHeight(height: 50)
-        vibrateLabel.setHeight(height: 50)
         
         stack.addSubview(vibrateSwitch)
         vibrateSwitch.centerY(inView: vibrateLabel)
@@ -139,7 +130,6 @@ class SoundsController: UIViewController {
 //MARK: - UITableViewDataSource
 
 extension SoundsController: UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return soundArray.count
     }

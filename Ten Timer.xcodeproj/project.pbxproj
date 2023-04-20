@@ -144,17 +144,16 @@
 		70BCD5A529999C59000D89B7 /* Ten Timer */ = {
 			isa = PBXGroup;
 			children = (
-				70BCD5A629999C59000D89B7 /* AppDelegate.swift */,
 				70BCD5C829999FA6000D89B7 /* Constants.swift */,
 				70C9EF78299F893F00BCDF00 /* Factories.swift */,
-				70C9EE91299E339600BCDF00 /* Sounds */,
-				70C9EF8429A155A400BCDF00 /* Json */,
-				70BCD5C229999E9A000D89B7 /* Extensions */,
 				70BCD5BF29999E89000D89B7 /* Model */,
 				70BCD5C029999E90000D89B7 /* View */,
 				70BCD5DA2999EA24000D89B7 /* ViewModel */,
 				70BCD5C129999E95000D89B7 /* Controller */,
 				70BCD5C329999EA2000D89B7 /* Files */,
+				70C9EE91299E339600BCDF00 /* Sounds */,
+				70C9EF8429A155A400BCDF00 /* Json */,
+				70BCD5C229999E9A000D89B7 /* Extensions */,
 			);
 			path = "Ten Timer";
 			sourceTree = "<group>";
@@ -212,6 +211,7 @@
 		70BCD5C329999EA2000D89B7 /* Files */ = {
 			isa = PBXGroup;
 			children = (
+				70BCD5A629999C59000D89B7 /* AppDelegate.swift */,
 				70BCD5B429999C5E000D89B7 /* LaunchScreen.storyboard */,
 				70BCD5B229999C5E000D89B7 /* Assets.xcassets */,
 				70BCD5B729999C5E000D89B7 /* Info.plist */,
